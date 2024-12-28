@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Static Resume Builder</title>
+  <link rel="stylesheet" href="Styles/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <nav id="heading-nav-bar">
+      <h1 id="nav-heading">Static Interactive Resume</h1>
+    </nav>
+  </header>
+  <div id="resume-content-parent-div">
+    <div id="resume-content">
+      <main>
+        <div id="resume-content-coloumn1">
+          <section id="profile-section">
+            <div id="profile-picture">
+              <h2>Profile Picture</h2>
+              <img src="" alt="face image">
+            </div>
+            <div>
+              <h2 id="profile">Profile :</h2>
+              <textarea name="Profile" id="profile-text"></textarea>
+            </div>
+          </section>
+          <section id="personal-information-section">
+            <h2 id="personal-information-heading">Personal Information :</h2>
+            <ul id="ul-personal-information">
+              <li>
+                <h4>Name:</h4> <input type="text" name="Name" id="person-name">
+              </li>
+
+              <li>
+                <h4>Email:</h4> <input type="text" name="Email" id="person-email">
+              </li>
+
+              <li>
+                <h4>Contact:</h4> <input type="text" name="Contact" id="person-contact">
+              </li>
+            </ul>
+          </section>
+          <section id="person-languages-section">
+            <h2 id="person-languages">Languages :</h2>
+            <ol>
+              <li><input type="text" class="person-lang-input"></li>
+              <li><input type="text" class="person-lang-input"></li>
+              <li><input type="text" class="person-lang-input"></li>
+              <li><input type="text" class="person-lang-input"></li>
+            </ol>
+          </section>
+        </div>
+        <div id="resume-content-coloumn2">
+          <section>
+            <h2>Education :</h2>
+            <textarea name="Education" id="person-education"></textarea>
+          </section>
+          <section>
+            <h2>Experience :</h2>
+            <textarea name="Experience" id="person-work-experience"></textarea>
+          </section>
+          <section>
+            <h2>Skills :</h2>
+            <ol id="skills-input-list">
+              <li><input type="text" class="skill-inputs"></li>
+              <button id="add-skill-inputs-button">+</button>
+            </ol>
+          </section>
+        </div>
+      </main>
+    </div>
+    <div id="buttons-parent-div">
+      <div id="buttons">
+        <button class="hide-buttons">Hide Experience If Fresher</button>
+        <button class="hide-buttons">Hide Skills</button>
+      </div>
+    </div>
+  </div>
+  <footer id="footer">
+    <p id="footer-content">Created by Aman</p>
+  </footer>
+  <script src="Scripts/main.js"></script>
+</body>
+
+</html>
