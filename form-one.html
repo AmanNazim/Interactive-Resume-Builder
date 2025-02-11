@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Static Resume Builder</title>
+  <link rel="stylesheet" href="Styles/form-one-style.css">
+</head>
+
+<body>
+  <header>
+    <nav id="heading-nav-bar">
+      <h1 id="nav-heading">Static Interactive Resume</h1>
+      <div id="right-nav-headings">
+        <a href="index.html">
+          <h1 id="nav-heading">
+            Home
+          </h1>
+        </a>
+        <h1 id="nav-heading">Contact us</h1>
+        <h1 id="nav-heading">Dashboard</h1>
+      </div>
+    </nav>
+  </header>
+  <div id="parent-div">
+    <div id="resume-content-parent-div">
+      <form id="resume-content">
+        <main>
+          <div id="resume-content-coloumn1">
+            <section id="profile-section">
+              <div id="profile-picture">
+                <h2>Profile Picture</h2>
+                <input type="file" id="profile-picture-input" accept="image/*">
+              </div>
+              <div>
+                <h2 id="profile">Profile :</h2>
+                <textarea name="Profile" id="profile-text" minlength="60"></textarea>
+              </div>
+            </section>
+            <section id="personal-information-section">
+              <h2 id="personal-information-heading">Personal Information :</h2>
+              <ul id="ul-personal-information">
+                <li class="li-style">
+                  <input class="input-style" type="text" id="person-name" maxlength="15" required>
+                  <button type="button" class="labelline">Enter Your Name</button>
+                </li>
+
+                <li class="li-style">
+                  <input class="input-style" type="text" id="person-email" maxlength="21" required>
+                  <button type="button" class="labelline">Enter Your Email</button>
+                </li>
+
+                <li class="li-style">
+                  <input class="input-style" type="text" id="person-contact" maxlength="22" required>
+                  <button type="button" class="labelline">Enter Your Contact</button>
+                </li>
+                <li class="li-style">
+                  <input class="input-style" type="text" id="person-address" required>
+                  <button type="button" class="labelline">Enter Your Address</button>
+                </li>
+              </ul>
+            </section>
+            <section id="person-languages-section">
+              <h2 id="person-languages">Languages :</h2>
+              <ol id="languages-input-list">
+                <li><input type="text" class="person-lang-input"></li>
+                <button type="button" id="add-languages-inputs-button" class="inputs-Button">+</button>
+              </ol>
+            </section>
+          </div>
+          <div id="resume-content-coloumn2">
+            <section>
+              <h2>Education :</h2>
+              <textarea name="Education" id="person-education"></textarea>
+            </section>
+            <section data-section="experience">
+              <h2>Experience :</h2>
+              <textarea name="Experience" id="person-work-experience"></textarea>
+            </section>
+            <section data-section="skills">
+              <h2>Skills :</h2>
+              <ol id="skills-input-list">
+                <li><input type="text" class="skill-inputs"></li>
+                <button type="button" id="add-skill-inputs-button" class="inputs-Button">+</button>
+              </ol>
+            </section>
+          </div>
+        </main>
+      </form>
+      <div id="buttons-parent-div">
+        <div id="buttons">
+          <button class="hide-buttons" data-section="experience" type="button">Hide Experience</button>
+          <button class="hide-buttons" data-section="skills" type="button">Hide Skills</button>
+        </div>
+      </div>
+    </div>
+    <section class="resume-section" id="resume-container">
+
+      <main id="resume-output" class="resume-template">
+        <div id="profile-pic-output"><img id="resume1-profile-pic" src=""></div>
+        <div id="resume-col-1">
+          <div id="profile-div">
+            <h1></h1>
+            <h5></h5>
+          </div>
+          <hr>
+          <div class="per-inf-div">
+            <h3>Personal Information :</h3>
+            <h5>Email : <span class="em-span" class="span"></span></h5>
+            <h5>Contact : <span class="con-span" class="span"></span></h5>
+            <h5 class="add-sec">Address : <span class="Add-span" class="span"></span></h5>
+          </div>
+          <hr>
+          <div class="per-inf-div">
+            <h3>Languages :</h3>
+            <ol>
+              <div>
+                <li></li>
+              </div>
+              <div>
+              </div>
+            </ol>
+          </div>
+        </div>
+        <div id="resume-col-2">
+          <div id="Edu-div">
+            <h3>Education :</h3>
+            <p></p>
+          </div>
+          <div class="resume-template-section experience" data-resume-section="experience" id="exp-div">
+            <hr>
+            <h3>Experience :</h3>
+            <p></p>
+          </div>
+          <div class="resume-template-section skills" data-resume-section="skills">
+            <hr>
+            <h3>Skills :</h3>
+            <ul>
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </main>
+      <main id="resume2-output" class="hidden">
+        <div id="resume2-col-1">
+          <div id="profile-pic-output2"><img id="resume2-profile-pic" src=""></div>
+          <div id="profile-div">
+            <h1></h1>
+            <h5></h5>
+          </div>
+          <hr>
+          <div class="per-inf-div">
+            <h3>Personal Information :</h3>
+            <h5>Email : <span class="em-span" class="span"></span></h5>
+            <h5>Contact : <span class="con-span" class="span"></span></h5>
+            <h5 class="add-sec">Address : <span class="Add-span" class="span"></span></h5>
+          </div>
+          <hr>
+          <div class="per-inf-div">
+            <h3>Languages :</h3>
+            <ol>
+              <div>
+                <li></li>
+              </div>
+              <div>
+              </div>
+            </ol>
+          </div>
+        </div>
+        <div id="resume2-col-2">
+          <div id="Edu-div">
+            <h3>Education :</h3>
+            <p></p>
+          </div>
+          <div class="resume-template-section experience" data-resume-section="experience" id="exp-div">
+            <hr>
+            <h3>Experience :</h3>
+            <p></p>
+          </div>
+          <div class="resume-template-section skills" data-resume-section="skills">
+            <hr>
+            <h3>Skills :</h3>
+            <ul>
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </main>
+      <main id="resume3-output" class="hidden" class="resume-template">
+        <div id="resume3-col-1">
+          <div id="profile-pic-output3"><img id="resume3-profile-pic" src=""></div>
+          <div id="profile-div">
+            <h1 id="profile-name"></h1>
+            <h5 id="profile-description"></h5>
+          </div>
+          <hr>
+          <div class="per-inf-div">
+            <h3>Personal Information :</h3>
+            <h5>Email : <span class="em-span" class="span"></span></h5>
+            <h5>Contact : <span class="con-span" class="span"></span></h5>
+            <h5 class="add-sec">Address : <span class="Add-span" class="span"></span></h5>
+          </div>
+          <hr>
+          <div class="per-inf-div">
+            <h3>Languages :</h3>
+            <ol>
+              <div>
+                <li></li>
+              </div>
+              <div>
+              </div>
+            </ol>
+          </div>
+        </div>
+        <div id="resume3-col-2">
+          <div id="Edu-div">
+            <h3>Education :</h3>
+            <p></p>
+          </div>
+          <div class="resume-template-section experience" data-resume-section="experience" id="exp-div">
+            <hr>
+            <h3>Experience :</h3>
+            <p></p>
+          </div>
+          <div class="resume-template-section skills" data-resume-section="skills">
+            <hr>
+            <h3>Skills :</h3>
+            <ul>
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </main>
+      <div>
+        Themes
+        <div id="themes-bar">
+          <div class="themes" id="theme1" tabindex="0">
+            <div id="theme1-pic" class="pic"></div>
+            <div id="theme1-col1"></div>
+            <div id="theme1-col2"></div>
+          </div>
+          <div class="themes" id="theme2" tabindex="0">
+            <div id="theme2-pic" class="pic"></div>
+            <div id="theme2-col1"></div>
+            <div id="theme2-col2"></div>
+          </div>
+          <div class="themes" id="theme3" tabindex="0">
+            <div id="theme3-pic" class="pic"></div>
+            <div id="theme3-col1"></div>
+            <div id="theme3-col2"></div>
+          </div>
+
+        </div>
+      </div>
+      <button id="generate-resume">Generate Resume</button>
+    </section>
+  </div>
+  <footer id="footer">
+    <p id="footer-content">Created by Aman</p>
+  </footer>
+  <script type="module" src="Scripts/main.js"></script>
+</body>
+
+</html>

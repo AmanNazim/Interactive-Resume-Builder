@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Generated Resume</title>
+                    <link rel="stylesheet" href="Styles/resume-output.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+
+<body>
+
+                    <header>
+                                        <nav id="heading-nav-bar">
+                                                            <h1 id="nav-heading">Static Interactive Resume</h1>
+                                                            <div id="right-nav-headings">
+                                                                                <a href="index.html">
+                                                                                                    <h1
+                                                                                                                        id="nav-heading">
+                                                                                                                        Home
+                                                                                                    </h1>
+                                                                                </a>
+                                                                                <h1 id="nav-heading"
+                                                                                                    class="contact-btn">
+                                                                                                    Contact us</h1>
+                                                                                <h1 id="nav-heading">Dashboard</h1>
+                                                            </div>
+                                        </nav>
+                    </header>
+                    <div id="resume-output-container">
+                                        <div class="action-buttons">
+                                                            <button id="edit-btn"><img src="assets/pen_18221918.png"
+                                                                                                    alt="edit-btn"></button>
+                                                            <button id="download-btn"><img src="assets/cloude-storage_12248324.png"
+                                                                                                    alt="download-btn"></button>
+                                                            <button id="share-btn"><img src="assets/share_2037687.png"
+                                                                                                    alt="share-btn"></button>
+
+                                        </div>
+                                        <div id="resume-container">
+                                                            <main id="resume1-output" class="resume-template">
+                                                                                <div id="profile-pic-output"><img id="resume1-profile-pic"
+                                                                                                                        src="">
+                                                                                </div>
+                                                                                <div id="resume-col-1">
+                                                                                                    <div
+                                                                                                                        id="profile-div">
+                                                                                                                        <h1
+                                                                                                                                            class="profile-name">
+                                                                                                                        </h1>
+                                                                                                                        <h5
+                                                                                                                                            class="profile-description">
+                                                                                                                        </h5>
+                                                                                                    </div>
+                                                                                                    <hr>
+                                                                                                    <div
+                                                                                                                        class="per-inf-div">
+                                                                                                                        <h3>Personal Information
+                                                                                                                                            :
+                                                                                                                        </h3>
+                                                                                                                        <h5>Email : <span class="em-span"
+                                                                                                                                                                class="span"></span>
+                                                                                                                        </h5>
+                                                                                                                        <h5>Contact : <span class="con-span"
+                                                                                                                                                                class="span"></span>
+                                                                                                                        </h5>
+                                                                                                                        <h5>Address : <span class="Add-span"
+                                                                                                                                                                class="span"></span>
+                                                                                                                        </h5>
+                                                                                                    </div>
+                                                                                                    <hr>
+                                                                                                    <div
+                                                                                                                        class="per-inf-div">
+                                                                                                                        <h3>Languages :
+                                                                                                                        </h3>
+                                                                                                                        <ol
+                                                                                                                                            class="languages-list">
+                                                                                                                                            <div>
+                                                                                                                                                                <li>
+                                                                                                                                                                </li>
+                                                                                                                                            </div>
+                                                                                                                                            <div>
+                                                                                                                                            </div>
+                                                                                                                        </ol>
+                                                                                                    </div>
+                                                                                </div>
+                                                                                <div id="resume-col-2">
+                                                                                                    <div id="Edu-div">
+                                                                                                                        <h3>Education :
+                                                                                                                        </h3>
+                                                                                                                        <p
+                                                                                                                                            class="education-content">
+                                                                                                                        </p>
+                                                                                                    </div>
+                                                                                                    <div class="resume-template-section experience"
+                                                                                                                        data-resume-section="experience"
+                                                                                                                        id="exp-div">
+                                                                                                                        <hr>
+                                                                                                                        <h3>Experience :
+                                                                                                                        </h3>
+                                                                                                                        <p
+                                                                                                                                            class="experience-content">
+                                                                                                                        </p>
+                                                                                                    </div>
+                                                                                                    <div class="resume-template-section skills"
+                                                                                                                        data-resume-section="skills">
+                                                                                                                        <hr>
+                                                                                                                        <h3>Skills :
+                                                                                                                        </h3>
+                                                                                                                        <ul
+                                                                                                                                            class="skills-list">
+                                                                                                                                            <li>
+                                                                                                                                            </li>
+                                                                                                                        </ul>
+                                                                                                    </div>
+                                                                                </div>
+                                                            </main>
+                                                            <main id="resume2-output" class="hidden">
+                                                                                <div id="resume2-col-1">
+                                                                                                    <div
+                                                                                                                        id="profile-pic-output2">
+                                                                                                                        <img id="resume2-profile-pic"
+                                                                                                                                            src="">
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                                        id="profile-div">
+                                                                                                                        <h1
+                                                                                                                                            class="profile-name">
+                                                                                                                        </h1>
+                                                                                                                        <h5
+                                                                                                                                            class="profile-description">
+                                                                                                                        </h5>
+                                                                                                    </div>
+                                                                                                    <hr>
+                                                                                                    <div
+                                                                                                                        class="per-inf-div">
+                                                                                                                        <h3>Personal Information
+                                                                                                                                            :
+                                                                                                                        </h3>
+                                                                                                                        <h5>Email : <span class="em-span"
+                                                                                                                                                                class="span"></span>
+                                                                                                                        </h5>
+                                                                                                                        <h5>Contact : <span class="con-span"
+                                                                                                                                                                class="span"></span>
+                                                                                                                        </h5>
+                                                                                                                        <h5>Address : <span class="Add-span"
+                                                                                                                                                                class="span"></span>
+                                                                                                                        </h5>
+                                                                                                    </div>
+                                                                                                    <hr>
+                                                                                                    <div
+                                                                                                                        class="per-inf-div">
+                                                                                                                        <h3>Languages :
+                                                                                                                        </h3>
+                                                                                                                        <ol
+                                                                                                                                            class="languages-list">
+                                                                                                                                            <div>
+                                                                                                                                                                <li>
+                                                                                                                                                                </li>
+                                                                                                                                            </div>
+                                                                                                                                            <div>
+                                                                                                                                            </div>
+                                                                                                                        </ol>
+                                                                                                    </div>
+                                                                                </div>
+                                                                                <div id="resume2-col-2">
+                                                                                                    <div id="Edu-div">
+                                                                                                                        <h3>Education :
+                                                                                                                        </h3>
+                                                                                                                        <p
+                                                                                                                                            class="education-content">
+                                                                                                                        </p>
+                                                                                                    </div>
+                                                                                                    <div class="resume-template-section experience"
+                                                                                                                        data-resume-section="experience"
+                                                                                                                        id="exp-div">
+                                                                                                                        <hr>
+                                                                                                                        <h3>Experience :
+                                                                                                                        </h3>
+                                                                                                                        <p
+                                                                                                                                            class="experience-content">
+                                                                                                                        </p>
+                                                                                                    </div>
+                                                                                                    <div class="resume-template-section skills"
+                                                                                                                        data-resume-section="skills">
+                                                                                                                        <hr>
+                                                                                                                        <h3>Skills :
+                                                                                                                        </h3>
+                                                                                                                        <ul
+                                                                                                                                            class="skills-list">
+                                                                                                                                            <li>
+                                                                                                                                            </li>
+                                                                                                                        </ul>
+                                                                                                    </div>
+                                                                                </div>
+                                                            </main>
+                                                            <main id="resume3-output" class="hidden">
+                                                                                <div id="resume3-col-1">
+                                                                                                    <div
+                                                                                                                        id="profile-pic-output3">
+                                                                                                                        <img id="resume3-profile-pic"
+                                                                                                                                            src="">
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                                        id="profile-div">
+                                                                                                                        <h1
+                                                                                                                                            class="profile-name">
+                                                                                                                        </h1>
+                                                                                                                        <h5
+                                                                                                                                            class="profile-description">
+                                                                                                                        </h5>
+                                                                                                    </div>
+                                                                                                    <hr>
+                                                                                                    <div
+                                                                                                                        class="per-inf-div">
+                                                                                                                        <h3>Personal Information
+                                                                                                                                            :
+                                                                                                                        </h3>
+                                                                                                                        <h5>Email : <span class="em-span"
+                                                                                                                                                                class="span"></span>
+                                                                                                                        </h5>
+                                                                                                                        <h5>Contact : <span class="con-span"
+                                                                                                                                                                class="span"></span>
+                                                                                                                        </h5>
+                                                                                                                        <h5>Address : <span class="Add-span"
+                                                                                                                                                                class="span"></span>
+                                                                                                                        </h5>
+                                                                                                    </div>
+                                                                                                    <hr>
+                                                                                                    <div
+                                                                                                                        class="per-inf-div">
+                                                                                                                        <h3>Languages :
+                                                                                                                        </h3>
+                                                                                                                        <ol
+                                                                                                                                            class="languages-list">
+                                                                                                                                            <div>
+                                                                                                                                                                <li>
+                                                                                                                                                                </li>
+                                                                                                                                            </div>
+                                                                                                                                            <div>
+                                                                                                                                            </div>
+                                                                                                                        </ol>
+                                                                                                    </div>
+                                                                                </div>
+                                                                                <div id="resume3-col-2">
+                                                                                                    <div id="Edu-div">
+                                                                                                                        <h3>Education :
+                                                                                                                        </h3>
+                                                                                                                        <p
+                                                                                                                                            class="education-content">
+                                                                                                                        </p>
+                                                                                                    </div>
+                                                                                                    <div class="resume-template-section experience"
+                                                                                                                        data-resume-section="experience"
+                                                                                                                        id="exp-div">
+                                                                                                                        <hr>
+                                                                                                                        <h3>Experience :
+                                                                                                                        </h3>
+                                                                                                                        <p
+                                                                                                                                            class="experience-content">
+                                                                                                                        </p>
+                                                                                                    </div>
+                                                                                                    <div class="resume-template-section skills"
+                                                                                                                        data-resume-section="skills">
+                                                                                                                        <hr>
+                                                                                                                        <h3>Skills :
+                                                                                                                        </h3>
+                                                                                                                        <ul
+                                                                                                                                            class="skills-list">
+                                                                                                                                            <li>
+                                                                                                                                            </li>
+                                                                                                                        </ul>
+                                                                                                    </div>
+                                                                                </div>
+                                                            </main>
+                                        </div>
+                                        <select id="format" style="display: none;">
+                                                            <option value="pdf">PDF</option>
+                                                            <option value="png">PNG</option>
+                                        </select>
+                    </div>
+                    <footer id="footer">
+                                        <p id="footer-content">
+                                                            Created
+                                                            by
+                                                            Aman
+                                        </p>
+                    </footer>
+                    <script type="module" src="dist/resume-output/manager.js"></script>
+                    <script type="module" src="dist/resume-output/resume-output.js"></script>
+</body>
+
+</html>
