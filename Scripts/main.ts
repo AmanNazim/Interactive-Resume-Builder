@@ -1,3 +1,94 @@
+// Function to show the profile input popup
+function showProfilePopup(): void {
+  const popup = document.getElementById("profile-popup") as HTMLElement;
+  if (popup) {
+    popup.style.display = "block"; // Show the popup
+  }
+}
+
+// Handle saving profile data (name and profile picture)
+document.getElementById("saveProfileBtn")?.addEventListener("click", () => {
+  const nameInput = document.getElementById("nameInput") as HTMLInputElement;
+  const profilePicInput = document.getElementById(
+    "profilePicInput"
+  ) as HTMLInputElement;
+
+  const profileName = nameInput.value.trim();
+  const profilePic = profilePicInput.files ? profilePicInput.files[0] : null;
+
+  if (profileName) {
+    // Save the name to localStorage
+    localStorage.setItem("profileName", profileName);
+
+    if (profilePic) {
+      // Save the profile picture to localStorage (as a base64 string)
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        localStorage.setItem("profilePic", reader.result as string);
+
+        // Update profile name and profile picture on the page
+        updateProfile(profileName, reader.result as string);
+
+        // Close the popup
+        closeProfilePopup();
+      };
+      reader.readAsDataURL(profilePic); // Read the image as a base64 string
+    } else {
+      // If no picture is uploaded, just update the profile name
+      updateProfile(profileName, "");
+
+      // Close the popup
+      closeProfilePopup();
+    }
+  } else {
+    alert("Please enter your name.");
+  }
+});
+
+// Function to update profile name and profile picture from localStorage
+function updateProfile(name: string, image: string): void {
+  const profileNameElement = document.querySelector(
+    ".profile-name"
+  ) as HTMLHeadingElement;
+  const profilePicElement = document.getElementById(
+    "resume1-profile-pic"
+  ) as HTMLImageElement;
+
+  if (profileNameElement) {
+    profileNameElement.textContent = name; // Update the name
+  }
+
+  if (profilePicElement && image) {
+    profilePicElement.src = image; // Update the profile picture
+  }
+}
+
+// Function to initialize profile from localStorage (called on page load)
+function initializeProfile(): void {
+  const storedName = localStorage.getItem("profileName");
+  const storedPic = localStorage.getItem("profilePic");
+
+  if (storedName) {
+    // Update profile if name exists in localStorage
+    updateProfile(storedName, storedPic || "");
+  } else {
+    // If no name in localStorage, show the profile input popup
+    showProfilePopup();
+  }
+}
+
+// Function to close the profile input popup
+function closeProfilePopup(): void {
+  const popup = document.getElementById("profile-popup") as HTMLElement;
+  if (popup) {
+    popup.style.display = "none"; // Close the popup
+  }
+}
+
+// Initialize the profile on page load
+document.addEventListener("DOMContentLoaded", () => {
+  initializeProfile();
+});
 //managing inputs lists dynamically using a class to define fucnctionality one time and use one
 //functionailty for both languages and skills input.
 class ListsManager {

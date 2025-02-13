@@ -1,44 +1,10 @@
-// Remove the imports since we're using CDN scripts
-// import { jsPDF } from "jspdf";
+"use strict";
+// import jsPDF from "jspdf";
 // import html2canvas from "html2canvas";
 // import { saveAs } from "file-saver";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
-    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-// Initialize after DOM load
+Object.defineProperty(exports, "__esModule", { value: true });
+// import "./Styles/resume-output.css";
+// // Initialize after DOM load
 document.addEventListener("DOMContentLoaded", function () {
     try {
         initializeManagers();
@@ -49,13 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 // Fix the initialization error by moving it inside a function
 function initializeManagers() {
-    var _a;
-    if (!window.html2canvas || !((_a = window.jspdf) === null || _a === void 0 ? void 0 : _a.jsPDF) || !window.saveAs) {
-        throw new Error("Required libraries not loaded");
-    }
     new DownloadManager();
     new ShareManager();
     new EditManager();
+    new createContactUSModal();
 }
 // 1. Download Manager
 var DownloadManager = /** @class */ (function () {
@@ -69,7 +32,8 @@ var DownloadManager = /** @class */ (function () {
     }
     DownloadManager.prototype.createDownloadModal = function () {
         var modal = document.createElement("div");
-        modal.innerHTML = "\n      <div class=\"modal-overlay download-overlay\" style=\"display: none;\">\n        <div class=\"modal-content download-content\">\n          <div class=\"modal-header\">\n            <h3 class=\"modal-title\">Download Resume</h3>\n            <button class=\"modal-close\">&times;</button>\n          </div>\n          <div id=\"download-preview\"></div>\n          <div class=\"download-controls\">\n            <select id=\"format\">\n              <option value=\"pdf\">PDF</option>\n              <option value=\"png\">PNG</option>\n              <option value=\"jpeg\">JPEG</option>\n              <option value=\"jpg\">JPG</option>\n            </select>\n            <button id=\"confirm-download\">Download</button>\n          </div>\n        </div>\n      </div>\n    ";
+        modal.className = "download-modal";
+        modal.innerHTML = "\n      <div class=\"modal-overlay download-overlay\" style=\"display: none;\">\n        <div class=\"modal-content download-content\">\n          <div class=\"modal-header\">\n            <h3 class=\"modal-title\">Download Resume</h3>\n            <button class=\"modal-close\">&times;</button>\n          </div>\n          <div class=\"download-preview\" id=\"download-preview\"></div>\n          <div class=\"download-controls\">\n            <select id=\"format\" class=\"format-select\">\n              <option value=\"pdf\">PDF Document</option>\n              <option value=\"png\">PNG Image</option>\n            </select>\n            <button id=\"confirm-download\" class=\"download-btn\">Download Resume</button>\n          </div>\n        </div>\n      </div>\n    ";
         document.body.appendChild(modal);
         return modal;
     };
@@ -79,6 +43,7 @@ var DownloadManager = /** @class */ (function () {
         if (downloadBtn) {
             downloadBtn.addEventListener("click", function () {
                 _this.showModal();
+                // this.generatePreview();
             });
         }
         var confirmBtn = this.modal.querySelector("#confirm-download");
@@ -87,21 +52,20 @@ var DownloadManager = /** @class */ (function () {
                 var _a;
                 var format = ((_a = _this.modal.querySelector("#format")) === null || _a === void 0 ? void 0 : _a.value) ||
                     "pdf";
-                _this.downloadResume(format);
+                // this.downloadFile(window.URL.createObjectURL(new Blob()), "resume.pdf");
+                _this.generatePdf();
+                // this.downloadResume(format);
             });
         }
         var closeBtn = this.modal.querySelector(".modal-close");
         if (closeBtn) {
-            closeBtn.addEventListener("click", function () {
-                _this.closeModal();
-            });
+            closeBtn.addEventListener("click", function () { return _this.closeModal(); });
         }
         var overlay = this.modal.querySelector(".modal-overlay");
         if (overlay) {
             overlay.addEventListener("click", function (e) {
-                if (e.target === overlay) {
+                if (e.target === overlay)
                     _this.closeModal();
-                }
             });
         }
     };
@@ -117,67 +81,46 @@ var DownloadManager = /** @class */ (function () {
             overlay.style.display = "none";
         }
     };
-    DownloadManager.prototype.downloadResume = function (format) {
-        return __awaiter(this, void 0, void 0, function () {
-            var element, clone, wrapper, canvas, jsPDF, pdf, imgData, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        element = document.querySelector(".resume-section:not(.hidden)");
-                        if (!element) {
-                            throw new Error("Resume container not found");
-                        }
-                        clone = element.cloneNode(true);
-                        clone.style.cssText = "\n        width: 210mm;\n        min-height: 297mm;\n        padding: 20mm;\n        margin: 20px;\n        background: white;\n        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);\n        border-radius: 8px;\n      ";
-                        wrapper = document.createElement("div");
-                        wrapper.style.cssText = "\n        position: fixed;\n        top: -9999px;\n        left: -9999px;\n        background: white;\n        padding: 20px;\n        border-radius: 10px;\n        box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);\n      ";
-                        wrapper.appendChild(clone);
-                        document.body.appendChild(wrapper);
-                        return [4 /*yield*/, window.html2canvas(wrapper, {
-                                scale: 2,
-                                useCORS: true,
-                                allowTaint: true,
-                                backgroundColor: "#ffffff",
-                            })];
-                    case 1:
-                        canvas = _a.sent();
-                        wrapper.remove();
-                        if (format === "pdf") {
-                            jsPDF = window.jspdf.jsPDF;
-                            pdf = new jsPDF({
-                                orientation: "portrait",
-                                unit: "mm",
-                                format: "a4",
-                            });
-                            imgData = canvas.toDataURL("image/jpeg", 1.0);
-                            pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
-                            pdf.save("resume.pdf");
-                        }
-                        else {
-                            canvas.toBlob(function (blob) {
-                                if (blob) {
-                                    window.saveAs(blob, "resume.".concat(format));
-                                }
-                            }, "image/".concat(format), 1.0);
-                        }
-                        this.closeModal();
-                        return [3 /*break*/, 3];
-                    case 2:
-                        error_1 = _a.sent();
-                        console.error("Download failed:", error_1);
-                        alert("Download failed. Please try again.");
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
-            });
-        });
+    DownloadManager.prototype.generatePdf = function () {
+        var _a;
+        var jsPDF = window.jsPDF;
+        // Create a new jsPDF instance
+        var jsPdf = new jsPDF("p", "pt", "letter");
+        // Retrieve the theme number from URL or default to "1"
+        var themeNumber = ((_a = new URLSearchParams(window.location.search).get("theme")) === null || _a === void 0 ? void 0 : _a.slice(-1)) ||
+            "1";
+        var htmlElement = document.getElementById("resume".concat(themeNumber, "-output"));
+        if (htmlElement) {
+            var options = {
+                margin: [72, 72, 72, 72],
+                autoPaging: "text", // Explicitly cast "text" to the correct type
+                html2canvas: {
+                    allowTaint: true,
+                    dpi: 300,
+                    letterRendering: true,
+                    logging: false,
+                    scale: 0.8,
+                },
+                callback: function (jsPdf) {
+                    // Save the PDF once the content is processed
+                    jsPdf.save("Test.pdf");
+                },
+            };
+            // Make sure that html2canvas is used and the callback is triggered after rendering
+            jsPdf.html(htmlElement, options);
+        }
+        else {
+            console.error("Target HTML element not found");
+        }
     };
     return DownloadManager;
 }());
-// 2. Share Manager
 var ShareManager = /** @class */ (function () {
     function ShareManager() {
+        this.userName = this.extractUserName();
+        if (!this.userName) {
+            throw new Error("User name is missing. Please ensure the name is added to the profile.");
+        }
         var modalElement = this.createShareModal();
         if (!modalElement) {
             throw new Error("Failed to create share modal");
@@ -185,9 +128,18 @@ var ShareManager = /** @class */ (function () {
         this.modal = modalElement;
         this.setupShareListeners();
     }
+    ShareManager.prototype.extractUserName = function () {
+        var _a;
+        // Grab the user name from the profile-name element
+        var profileNameElement = document.querySelector(".profile-name");
+        if (profileNameElement) {
+            return ((_a = profileNameElement.textContent) === null || _a === void 0 ? void 0 : _a.trim()) || "";
+        }
+        return ""; // Return an empty string if the element is not found
+    };
     ShareManager.prototype.createShareModal = function () {
         var modal = document.createElement("div");
-        modal.innerHTML = "\n      <div class=\"modal-overlay share-overlay\" style=\"display: none;\">\n        <div class=\"modal-content share-content\">\n          <div class=\"modal-header\">\n            <h3 class=\"modal-title\">Share Resume</h3>\n            <button class=\"modal-close\">&times;</button>\n          </div>\n          <input type=\"text\" id=\"share-link\" readonly>\n          <button id=\"copy-link\">Copy Link</button>\n          <div class=\"share-buttons\">\n            <button class=\"share whatsapp\">WhatsApp</button>\n            <button class=\"share linkedin\">LinkedIn</button>\n            <button class=\"share twitter\">Twitter</button>\n          </div>\n        </div>\n      </div>\n    ";
+        modal.innerHTML = "\n      <div class=\"modal-overlay share-overlay\" style=\"display: none;\">\n        <div class=\"modal-content share-content\">\n          <div class=\"modal-header\">\n            <h3 class=\"modal-title\">Share Resume</h3>\n            <button class=\"modal-close\">&times;</button>\n          </div>\n          <div id=\"share-link-container\">\n            <input type=\"text\" id=\"share-link\" readonly>\n            <button id=\"copy-link\">Copy Link</button>\n          </div>\n          <h4 id=\"share-heading\">Share With Others :</h4>\n          <div class=\"share-buttons\">\n            <button class=\"share whatsapp\"><img src=\"assets/whatsapp_3670025.png\" alt=\"whatsapp\"></img></button>\n            <button class=\"share linkedin\"><img src=\"assets/social_10110406.png\" alt=\"linkedin\"></img></button>\n            <button class=\"share twitter\"><img src=\"assets/twitter_5969020.png\" alt=\"twitter\"></img></button>\n          </div>\n        </div>\n      </div>\n    ";
         document.body.appendChild(modal);
         return modal;
     };
@@ -220,7 +172,8 @@ var ShareManager = /** @class */ (function () {
         var copyBtn = this.modal.querySelector("#copy-link");
         var shareLink = this.modal.querySelector("#share-link");
         if (copyBtn && shareLink) {
-            shareLink.value = window.location.href;
+            // Use the unique link with the user's name
+            shareLink.value = this.generateResumeLink();
             copyBtn.addEventListener("click", function () {
                 shareLink.select();
                 document.execCommand("copy");
@@ -239,6 +192,11 @@ var ShareManager = /** @class */ (function () {
             overlay.style.display = "none";
         }
     };
+    ShareManager.prototype.generateResumeLink = function () {
+        // Generate a unique link for the user's resume based on their name
+        var baseUrl = window.location.origin + "/resume"; // Modify with your resume path
+        return "".concat(baseUrl, "?name=").concat(encodeURIComponent(this.userName));
+    };
     ShareManager.prototype.shareOnPlatform = function (event) {
         var target = event.target;
         var platform = target.classList[1];
@@ -247,7 +205,7 @@ var ShareManager = /** @class */ (function () {
             return;
         }
         var text = encodeURIComponent("Check out my resume!");
-        var url = encodeURIComponent(window.location.href);
+        var url = encodeURIComponent(this.generateResumeLink()); // Use the unique resume URL
         var urls = {
             whatsapp: "https://api.whatsapp.com/send?text=".concat(text, "%20").concat(url),
             linkedin: "https://www.linkedin.com/sharing/share-offsite/?url=".concat(url),
@@ -275,7 +233,6 @@ var EditManager = /** @class */ (function () {
             ".Add-span",
         ];
         this.setupEditListeners();
-        this.loadSavedContent();
     }
     EditManager.prototype.setupEditListeners = function () {
         var _this = this;
@@ -302,10 +259,30 @@ var EditManager = /** @class */ (function () {
                 }
             });
         });
-        document.body.classList.toggle("edit-mode", this.isEditing);
+        this.updateEditButton();
+        var resumeOutputContainer = document.getElementById("resume-output-container");
+        resumeOutputContainer === null || resumeOutputContainer === void 0 ? void 0 : resumeOutputContainer.classList.toggle("edit-mode", this.isEditing);
+        document.body.style.zIndex = this.isEditing ? "-1111" : "0";
+    };
+    EditManager.prototype.updateEditButton = function () {
         var editBtn = document.getElementById("edit-btn");
-        if (editBtn) {
-            editBtn.textContent = this.isEditing ? "Save" : "Edit";
+        if (!editBtn)
+            return;
+        if (this.isEditing) {
+            editBtn.textContent = "Save";
+            Object.assign(editBtn.style, {
+                color: "white",
+                backgroundColor: "var(--primary-bg-color)",
+                border: "1px solid var(--primary-light-color)",
+            });
+        }
+        else {
+            editBtn.innerHTML = "<img src='assets/pen_18221918.png' alt='edit-btn'>";
+            Object.assign(editBtn.style, {
+                transition: "all 1s ease-in-out",
+                backgroundColor: "var(--primary-light-color)",
+                border: "2px solid var(--primary-bg-color)",
+            });
         }
     };
     EditManager.prototype.saveChanges = function () {
@@ -325,36 +302,59 @@ var EditManager = /** @class */ (function () {
         };
         localStorage.setItem("resumeData", JSON.stringify(data));
     };
-    EditManager.prototype.loadSavedContent = function () {
-        var savedData = localStorage.getItem("resumeData");
-        if (savedData) {
-            var data = JSON.parse(savedData);
-            this.populateContent(data);
-        }
-    };
-    EditManager.prototype.populateContent = function (data) {
-        if (data.profile) {
-            var _a = data.profile, name_1 = _a.name, email = _a.email, contact = _a.contact, address = _a.address, profileText = _a.profileText;
-            if (name_1)
-                document.querySelector(".profile-name").textContent = name_1;
-            if (email)
-                document.querySelector(".em-span").textContent = email;
-            if (contact)
-                document.querySelector(".con-span").textContent = contact;
-            if (address)
-                document.querySelector(".Add-span").textContent = address;
-            if (profileText)
-                document.querySelector(".profile-description").textContent =
-                    profileText;
-        }
-        if (data.education) {
-            document.querySelector(".education-content").textContent =
-                data.education;
-        }
-        if (data.experience) {
-            document.querySelector(".experience-content").textContent =
-                data.experience;
-        }
-    };
     return EditManager;
+}());
+function html2pdf(resumeElement, p0) {
+    throw new Error("Function not implemented.");
+}
+var createContactUSModal = /** @class */ (function () {
+    function createContactUSModal() {
+        this.modal = this.createModal();
+        this.setupContactUSModal();
+    }
+    createContactUSModal.prototype.setupContactUSModal = function () {
+        this.setupContactListeners();
+    };
+    createContactUSModal.prototype.createModal = function () {
+        var modal = document.createElement("div");
+        modal.innerHTML = "\n    <div class=\"modal-overlay contact-overlay\" style=\"display: none;\">\n        <div class=\"modal-content contact-content\">\n          <div class=\"modal-header\">\n            <h3 class=\"modal-title\">Contact Us</h3>\n            <button class=\"modal-close\">&times;</button>    \n          </div>\n          <div class=\"contact-form\">\n            <form id=\"contact-form\">\n              <input type=\"text\" id=\"name\" placeholder=\"Name\">\n              <input type=\"email\" id=\"email\" placeholder=\"Email\">\n              <textarea id=\"message\" placeholder=\"Message\"></textarea>\n            </form>\n          </div>\n        </div>\n      </div>\n    ";
+        document.body.appendChild(modal);
+        return modal;
+    };
+    createContactUSModal.prototype.setupContactListeners = function () {
+        var _this = this;
+        // Fix: Change from contact-btn to contact-btn class since that's what's in the HTML
+        var contactBtn = document.querySelector(".contact-btn");
+        if (contactBtn) {
+            contactBtn.addEventListener("click", function () {
+                _this.showModal();
+            });
+        }
+        var closeBtn = this.modal.querySelector(".modal-close");
+        if (closeBtn) {
+            closeBtn.addEventListener("click", function () { return _this.closeModal(); });
+        }
+        // Add click handler for overlay to close when clicking outside
+        var overlay = this.modal.querySelector(".modal-overlay");
+        if (overlay) {
+            overlay.addEventListener("click", function (e) {
+                if (e.target === overlay) {
+                    _this.closeModal();
+                }
+            });
+        }
+    };
+    createContactUSModal.prototype.showModal = function () {
+        var overlay = this.modal.querySelector(".modal-overlay");
+        if (overlay) {
+            overlay.style.display = "flex";
+        }
+    };
+    createContactUSModal.prototype.closeModal = function () {
+        var overlay = this.modal.querySelector(".modal-overlay");
+        if (overlay) {
+            overlay.style.display = "none";
+        }
+    };
+    return createContactUSModal;
 }());

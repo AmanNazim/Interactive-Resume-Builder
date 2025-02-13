@@ -1,3 +1,7 @@
+declare function showProfilePopup(): void;
+declare function updateProfile(name: string, image: string): void;
+declare function initializeProfile(): void;
+declare function closeProfilePopup(): void;
 declare class ListsManager {
     private inputList;
     private inputsClass;

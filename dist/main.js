@@ -8,7 +8,81 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var _a;
+var _a, _b;
+// Function to show the profile input popup
+function showProfilePopup() {
+    const popup = document.getElementById("profile-popup");
+    if (popup) {
+        popup.style.display = "block"; // Show the popup
+    }
+}
+// Handle saving profile data (name and profile picture)
+(_a = document.getElementById("saveProfileBtn")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => {
+    const nameInput = document.getElementById("nameInput");
+    const profilePicInput = document.getElementById("profilePicInput");
+    const profileName = nameInput.value.trim();
+    const profilePic = profilePicInput.files ? profilePicInput.files[0] : null;
+    if (profileName) {
+        // Save the name to localStorage
+        localStorage.setItem("profileName", profileName);
+        if (profilePic) {
+            // Save the profile picture to localStorage (as a base64 string)
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                localStorage.setItem("profilePic", reader.result);
+                // Update profile name and profile picture on the page
+                updateProfile(profileName, reader.result);
+                // Close the popup
+                closeProfilePopup();
+            };
+            reader.readAsDataURL(profilePic); // Read the image as a base64 string
+        }
+        else {
+            // If no picture is uploaded, just update the profile name
+            updateProfile(profileName, "");
+            // Close the popup
+            closeProfilePopup();
+        }
+    }
+    else {
+        alert("Please enter your name.");
+    }
+});
+// Function to update profile name and profile picture from localStorage
+function updateProfile(name, image) {
+    const profileNameElement = document.querySelector(".profile-name");
+    const profilePicElement = document.getElementById("resume1-profile-pic");
+    if (profileNameElement) {
+        profileNameElement.textContent = name; // Update the name
+    }
+    if (profilePicElement && image) {
+        profilePicElement.src = image; // Update the profile picture
+    }
+}
+// Function to initialize profile from localStorage (called on page load)
+function initializeProfile() {
+    const storedName = localStorage.getItem("profileName");
+    const storedPic = localStorage.getItem("profilePic");
+    if (storedName) {
+        // Update profile if name exists in localStorage
+        updateProfile(storedName, storedPic || "");
+    }
+    else {
+        // If no name in localStorage, show the profile input popup
+        showProfilePopup();
+    }
+}
+// Function to close the profile input popup
+function closeProfilePopup() {
+    const popup = document.getElementById("profile-popup");
+    if (popup) {
+        popup.style.display = "none"; // Close the popup
+    }
+}
+// Initialize the profile on page load
+document.addEventListener("DOMContentLoaded", () => {
+    initializeProfile();
+});
 //managing inputs lists dynamically using a class to define fucnctionality one time and use one
 //functionailty for both languages and skills input.
 class ListsManager {
@@ -468,8 +542,8 @@ document.querySelectorAll(".themes").forEach((theme) => {
     });
 });
 // Generate Resume handler
-(_a = document
-    .getElementById("generate-resume")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => __awaiter(void 0, void 0, void 0, function* () {
+(_b = document
+    .getElementById("generate-resume")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", () => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c;
     // Validate theme selection
     const selectedTheme = (_a = document.querySelector(".themes.selected")) === null || _a === void 0 ? void 0 : _a.id;

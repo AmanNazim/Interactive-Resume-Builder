@@ -1,15 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-import * as jsPDF from "jspdf";
-import html2canvas from "html2canvas";
-import { saveAs } from "file-saver";
 // import "./Styles/resume-output.css";
 // // Initialize after DOM load
 document.addEventListener("DOMContentLoaded", () => {
@@ -25,9 +13,8 @@ function initializeManagers() {
     new DownloadManager();
     new ShareManager();
     new EditManager();
-    new createContactUSModal();
+    // new createContactUSModal();
 }
-// 1. Download Manager
 class DownloadManager {
     constructor() {
         const modalElement = this.createDownloadModal();
@@ -37,6 +24,7 @@ class DownloadManager {
         this.modal = modalElement;
         this.setupDownloadListeners();
     }
+    // Create the download modal
     createDownloadModal() {
         const modal = document.createElement("div");
         modal.className = "download-modal";
@@ -61,12 +49,12 @@ class DownloadManager {
         document.body.appendChild(modal);
         return modal;
     }
+    // Setup listeners for modal actions
     setupDownloadListeners() {
         const downloadBtn = document.getElementById("download-btn");
         if (downloadBtn) {
             downloadBtn.addEventListener("click", () => {
                 this.showModal();
-                // this.generatePreview();
             });
         }
         const confirmBtn = this.modal.querySelector("#confirm-download");
@@ -75,9 +63,12 @@ class DownloadManager {
                 var _a;
                 const format = ((_a = this.modal.querySelector("#format")) === null || _a === void 0 ? void 0 : _a.value) ||
                     "pdf";
-                // this.downloadFile(window.URL.createObjectURL(new Blob()), "resume.pdf");
-                // this.generatePdf();
-                this.downloadResume(format);
+                if (format === "pdf") {
+                    this.generatePdf();
+                }
+                else if (format === "png") {
+                    this.generatePng();
+                }
             });
         }
         const closeBtn = this.modal.querySelector(".modal-close");
@@ -92,238 +83,272 @@ class DownloadManager {
             });
         }
     }
+    // Open modal
     showModal() {
         const overlay = this.modal.querySelector(".modal-overlay");
         if (overlay) {
             overlay.style.display = "flex";
         }
     }
+    // Close modal
     closeModal() {
         const overlay = this.modal.querySelector(".modal-overlay");
         if (overlay) {
             overlay.style.display = "none";
         }
     }
-    // private generatePdf() {
-    //   let pdf = new jsPDF("p", "pt", "letter");
-    // const themeNumber =
-    //   new URLSearchParams(window.location.search).get("theme")?.slice(-1) ||
-    //   "1";
-    //   const htmlElement = document.getElementById(`resume${themeNumber}-output`);
-    //   if (!htmlElement) {
-    //     console.error("Resume element not found");
-    //     return;
-    //   }
-    //   // Create a clone of the element to avoid modifying the original
-    //   const clone = htmlElement.cloneNode(true) as HTMLElement;
-    //   // Get computed styles for the original element and its children
-    //   const styles = window.getComputedStyle(htmlElement);
-    //   const styleText = `
-    //     #${clone.id} {
-    //       ${Array.from(styles)
-    //         .map((prop) => `${prop}: ${styles.getPropertyValue(prop)};`)
-    //         .join("\n")}
-    //     }
-    //   `;
-    //   // Apply styles to children elements
-    //   const children = htmlElement.getElementsByTagName("main");
-    //   for (let i = 0; i < children.length; i++) {
-    //     const element = children[i];
-    //     const computedStyle = window.getComputedStyle(element);
-    //     let elementStyle = `
-    //       #${clone.id} ${element.tagName.toLowerCase()}:not(style) {
-    //         ${Array.from(computedStyle)
-    //           .map((prop) => `${prop}: ${computedStyle.getPropertyValue(prop)};`)
-    //           .join("\n")}
-    //       }
-    //     `;
-    //     let styleText: any;
-    //     styleText += elementStyle;
-    //   }
-    //   // Create and append style element
-    //   const style = document.createElement("style");
-    //   style.textContent = styleText;
-    //   clone.appendChild(style);
-    //   // Generate PDF with computed styles
-    //   const opt = {
-    //     callback: function (jsPdf: any) {
-    //       jsPdf.save("Resume.pdf");
-    //     },
-    //     margin: [72, 72, 72, 72],
-    //     autoPaging: "text",
-    //     html2canvas: {
-    //       allowTaint: true,
-    //       dpi: 300,
-    //       letterRendering: true,
-    //       logging: true, // Enable logging for debugging
-    //       scale: 0.8,
-    //     },
-    //   };
-    //   pdf.html(clone, opt);
-    // }
-    // private async downloadFile(fileUrl: string, filename: string): Promise<void> {
-    //   try {
-    //     const response = await fetch(fileUrl);
-    //     if (!response.ok) {
-    //       throw new Error("Network response was not ok");
-    //     }
-    //     const blob = await response.blob();
-    //     const blobUrl = URL.createObjectURL(blob);
-    //     const img = new Image();
-    //     await new Promise((resolve, reject) => {
-    //       img.onload = resolve;
-    //       img.onerror = reject;
-    //       img.src = blobUrl;
-    //     });
-    //     const pdf = new jsPDF();
-    //     pdf.addImage(img, "PNG", 0, 0, 210, 297);
-    //     pdf.save(filename);
-    //     const url = window.URL.createObjectURL(blob);
-    //     const a = document.createElement("a");
-    //     a.style.display = "none";
-    //     a.href = url;
-    //     a.download = filename;
-    //     document.body.appendChild(a);
-    //     a.click();
-    //     document.body.removeChild(a);
-    //     window.URL.revokeObjectURL(url);
-    //   } catch (error) {
-    //     console.error("There was a problem with the fetch operation:", error);
-    //   }
-    // }
-    downloadResume(format) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a;
-            try {
-                const themeNumber = (yield ((_a = new URLSearchParams(window.location.search)
-                    .get("theme")) === null || _a === void 0 ? void 0 : _a.slice(-1))) || "1";
-                const element = yield document.querySelector(`resume${themeNumber}-output`);
-                if (!element) {
-                    throw new Error("Resume container not found");
-                }
-                // Show loading state
-                const downloadBtn = this.modal.querySelector("#confirm-download");
-                if (downloadBtn) {
-                    downloadBtn.textContent = "Preparing download...";
-                    downloadBtn.setAttribute("disabled", "true");
-                }
-                const clone = (yield element.cloneNode(true));
-                clone.style.cssText = `
-        width: 210mm;
-        min-height: 297mm;
-        padding: 20mm;
-        background: white;
-      `;
-                // Create a wrapper with white background
-                const wrapper = yield document.createElement("div");
-                wrapper.style.cssText = `
-        position: fixed;
-        top: -9999px;
-        left: -9999px;
-        background: white;
-        width: 210mm;
-        min-height: 297mm;
-      `;
-                wrapper.appendChild(clone);
-                document.body.appendChild(wrapper);
-                try {
-                    const canvas = yield html2canvas(wrapper, {
-                        scale: 2,
-                        useCORS: true,
-                        allowTaint: true,
-                        backgroundColor: "#ffffff",
-                        logging: true,
-                        foreignObjectRendering: true,
-                    });
-                    if (format === "pdf") {
-                        const pdf = yield new jsPDF.jsPDF({
-                            orientation: "portrait",
-                            unit: "mm",
-                            format: "a4",
-                            compress: true,
-                        });
-                        const imgData = canvas.toDataURL("image/jpeg", 1.0);
-                        pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
-                        pdf.save(`resume-${new Date().toISOString().split("T")[0]}.pdf`);
-                    }
-                    else {
-                        canvas.toBlob((blob) => {
-                            if (blob) {
-                                saveAs(blob, `resume-${new Date().toISOString().split("T")[0]}.${format}`);
-                            }
-                        }, `image/${format}`, 1.0);
-                    }
-                }
-                finally {
-                    wrapper.remove();
-                }
-                this.closeModal();
-            }
-            catch (error) {
-                console.error("Download failed:", error);
-                alert("Download failed. Please try again.");
-            }
-            finally {
-                const downloadBtn = this.modal.querySelector("#confirm-download");
-                if (downloadBtn) {
-                    downloadBtn.textContent = "Download Resume";
-                    downloadBtn.removeAttribute("disabled");
-                }
-            }
-        });
-    }
-    generatePreview() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const previewContainer = this.modal.querySelector("#download-preview");
-            // Change selector to match the visible resume template
-            const element = document.querySelector("#resume1-output");
-            if (!previewContainer || !element) {
-                console.error("Required elements not found");
-                return;
-            }
-            try {
-                previewContainer.innerHTML =
-                    '<div class="preview-loading">Generating preview...</div>';
-                const clone = element.cloneNode(true);
-                // Adjust clone styles for better preview
-                clone.style.cssText = `
-        width: 210mm;
-        min-height: 297mm;
-        padding: 20mm;
-        background: white;
-        transform: scale(0.2);
-        transform-origin: top left;
-      `;
-                // @ts-ignore
-                const canvas = yield html2canvas(clone, {
-                    scale: 1,
-                    useCORS: true,
+    // Generate PDF from resume content
+    generatePdf() {
+        var _a;
+        // Ensure html2canvas is loaded before use
+        if (!window.html2canvas) {
+            console.error("html2canvas is not loaded.");
+            return;
+        }
+        const jsPDF = window.jsPDF;
+        const html2canvas = window.html2canvas;
+        // Create a new jsPDF instance
+        const jsPdf = new jsPDF("p", "pt", "letter");
+        const themeNumber = ((_a = new URLSearchParams(window.location.search).get("theme")) === null || _a === void 0 ? void 0 : _a.slice(-1)) ||
+            "1";
+        const htmlElement = document.getElementById(`resume${themeNumber}-output`);
+        if (htmlElement) {
+            const options = {
+                margin: [72, 72, 72, 72],
+                autoPaging: "text",
+                html2canvas: {
                     allowTaint: true,
-                    backgroundColor: "#ffffff",
-                    logging: true, // Enable logging for debugging
-                    foreignObjectRendering: true,
-                });
-                previewContainer.innerHTML = "";
-                canvas.style.cssText = "width: 100%; height: auto; max-height: 400px;";
-                previewContainer.appendChild(canvas);
-            }
-            catch (error) {
-                console.error("Preview generation failed:", error);
-                previewContainer.innerHTML =
-                    '<div class="preview-error">Preview generation failed</div>';
-            }
-        });
+                    dpi: 300,
+                    letterRendering: true,
+                    logging: false,
+                    scale: 0.8,
+                },
+                callback: (jsPdf) => {
+                    jsPdf.save("Resume.pdf"); // Save the PDF
+                },
+            };
+            jsPdf.html(htmlElement, options);
+        }
+        else {
+            console.error("Target HTML element not found");
+        }
+    }
+    // Generate PNG from resume content (using html2canvas)
+    generatePng() {
+        var _a;
+        // Ensure html2canvas is loaded before use
+        if (!window.html2canvas) {
+            console.error("html2canvas is not loaded.");
+            return;
+        }
+        const html2canvas = window.html2canvas;
+        const themeNumber = ((_a = new URLSearchParams(window.location.search).get("theme")) === null || _a === void 0 ? void 0 : _a.slice(-1)) ||
+            "1";
+        const htmlElement = document.getElementById(`resume${themeNumber}-output`);
+        if (htmlElement) {
+            html2canvas(htmlElement).then((canvas) => {
+                const imgData = canvas.toDataURL("image/png");
+                const link = document.createElement("a");
+                link.href = imgData;
+                link.download = "Resume.png";
+                link.click(); // Trigger download
+            });
+        }
+        else {
+            console.error("Target HTML element not found for PNG");
+        }
     }
 }
-// 2. Share Manager
+// private async downloadFile(fileUrl: string, filename: string): Promise<void> {
+//   try {
+//     const response = await fetch(fileUrl);
+//     if (!response.ok) {
+//       throw new Error("Network response was not ok");
+//     }
+//     const blob = await response.blob();
+//     const blobUrl = URL.createObjectURL(blob);
+//     const img = new Image();
+//     await new Promise((resolve, reject) => {
+//       img.onload = resolve;
+//       img.onerror = reject;
+//       img.src = blobUrl;
+//     });
+//     const pdf = new jsPDF();
+//     pdf.addImage(img, "PNG", 0, 0, 210, 297);
+//     pdf.save(filename);
+//     const url = window.URL.createObjectURL(blob);
+//     const a = document.createElement("a");
+//     a.style.display = "none";
+//     a.href = url;
+//     a.download = filename;
+//     document.body.appendChild(a);
+//     a.click();
+//     document.body.removeChild(a);
+//     window.URL.revokeObjectURL(url);
+//   } catch (error) {
+//     console.error("There was a problem with the fetch operation:", error);
+//   }
+// }
+// private async downloadResume(format: string): Promise<void> {
+//   try {
+//     const themeNumber =
+//       (await new URLSearchParams(window.location.search)
+//         .get("theme")
+//         ?.slice(-1)) || "1";
+//     const element = await document.querySelector(
+//       `resume${themeNumber}-output`
+//     );
+//     if (!element) {
+//       throw new Error("Resume container not found");
+//     }
+//     // Show loading state
+//     const downloadBtn = this.modal.querySelector("#confirm-download");
+//     if (downloadBtn) {
+//       downloadBtn.textContent = "Preparing download...";
+//       downloadBtn.setAttribute("disabled", "true");
+//     }
+//     const clone = (await element.cloneNode(true)) as HTMLElement;
+//     clone.style.cssText = `
+//       width: 210mm;
+//       min-height: 297mm;
+//       padding: 20mm;
+//       background: white;
+//     `;
+//     // Create a wrapper with white background
+//     const wrapper = await document.createElement("div");
+//     wrapper.style.cssText = `
+//       position: fixed;
+//       top: -9999px;
+//       left: -9999px;
+//       background: white;
+//       width: 210mm;
+//       min-height: 297mm;
+//     `;
+//     wrapper.appendChild(clone);
+//     document.body.appendChild(wrapper);
+//     try {
+//       const canvas = await html2canvas(wrapper, {
+//         scale: 2,
+//         useCORS: true,
+//         allowTaint: true,
+//         backgroundColor: "#ffffff",
+//         logging: true,
+//         foreignObjectRendering: true,
+//       });
+//       if (format === "pdf") {
+//         const pdf = await new jsPDF.jsPDF({
+//           orientation: "portrait",
+//           unit: "mm",
+//           format: "a4",
+//           compress: true,
+//         });
+//         const imgData = canvas.toDataURL("image/jpeg", 1.0);
+//         pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
+//         pdf.save(`resume-${new Date().toISOString().split("T")[0]}.pdf`);
+//       } else {
+//         canvas.toBlob(
+//           (blob: Blob | null) => {
+//             if (blob) {
+//               saveAs(
+//                 blob,
+//                 `resume-${new Date().toISOString().split("T")[0]}.${format}`
+//               );
+//             }
+//           },
+//           `image/${format}`,
+//           1.0
+//         );
+//       }
+//     } finally {
+//       wrapper.remove();
+//     }
+//     this.closeModal();
+//   } catch (error) {
+//     console.error("Download failed:", error);
+//     alert("Download failed. Please try again.");
+//   } finally {
+//     const downloadBtn = this.modal.querySelector("#confirm-download");
+//     if (downloadBtn) {
+//       downloadBtn.textContent = "Download Resume";
+//       downloadBtn.removeAttribute("disabled");
+//     }
+//   }
+// }
+// private async generatePreview(): Promise<void> {
+//   const previewContainer = this.modal.querySelector("#download-preview");
+//   // Change selector to match the visible resume template
+//   const element = document.querySelector("#resume1-output");
+//   if (!previewContainer || !element) {
+//     console.error("Required elements not found");
+//     return;
+//   }
+//   try {
+//     previewContainer.innerHTML =
+//       '<div class="preview-loading">Generating preview...</div>';
+//     const clone = element.cloneNode(true) as HTMLElement;
+//     // Adjust clone styles for better preview
+//     clone.style.cssText = `
+//       width: 210mm;
+//       min-height: 297mm;
+//       padding: 20mm;
+//       background: white;
+//       transform: scale(0.2);
+//       transform-origin: top left;
+//     `;
+//     // @ts-ignore
+//     const canvas = await html2canvas(clone, {
+//       scale: 1,
+//       useCORS: true,
+//       allowTaint: true,
+//       backgroundColor: "#ffffff",
+//       logging: true, // Enable logging for debugging
+//       foreignObjectRendering: true,
+//     });
+//     previewContainer.innerHTML = "";
+//     canvas.style.cssText = "width: 100%; height: auto; max-height: 400px;";
+//     previewContainer.appendChild(canvas);
+//   } catch (error) {
+//     console.error("Preview generation failed:", error);
+//     previewContainer.innerHTML =
+//       '<div class="preview-error">Preview generation failed</div>';
+//   }
+// }
 class ShareManager {
     constructor() {
+        this.userName = this.extractUserName();
+        if (!this.userName) {
+            throw new Error("User name is missing. Please ensure the name is added to the profile.");
+        }
         const modalElement = this.createShareModal();
         if (!modalElement) {
             throw new Error("Failed to create share modal");
         }
         this.modal = modalElement;
         this.setupShareListeners();
+    }
+    extractUserName() {
+        var _a;
+        // Grab the user name from the heading element with class 'profile-name'
+        const profileNameElement = document.querySelector(".profile-name");
+        console.log("Extracting user name...");
+        if (profileNameElement) {
+            const user = (_a = profileNameElement.textContent) === null || _a === void 0 ? void 0 : _a.trim(); // Get the name from the heading and trim it
+            console.log("Extracted name:", user); // Log the extracted name
+            if (user) {
+                // Store the user name in localStorage
+                localStorage.setItem("profileName", user);
+                // Return the extracted user name
+                return user;
+            }
+        }
+        // Return a default name if no name is available
+        console.warn("No profile name found, using default 'Unnamed User'.");
+        return "Unnamed User";
+    }
+    getStoredUserName() {
+        const storedName = localStorage.getItem("profileName");
+        console.log("Retrieved stored name:", storedName); // Log to check if it's retrieved correctly
+        return storedName || "Unnamed User"; // Return stored name or default
     }
     createShareModal() {
         const modal = document.createElement("div");
@@ -334,17 +359,21 @@ class ShareManager {
             <h3 class="modal-title">Share Resume</h3>
             <button class="modal-close">&times;</button>
           </div>
-          <input type="text" id="share-link" readonly>
-          <button id="copy-link">Copy Link</button>
+          <div id="share-link-container">
+            <input type="text" id="share-link" readonly>
+            <button id="copy-link">Copy Link</button>
+          </div>
+          <h4 id="share-heading">Share With Others :</h4>
           <div class="share-buttons">
-            <button class="share whatsapp">WhatsApp</button>
-            <button class="share linkedin">LinkedIn</button>
-            <button class="share twitter">Twitter</button>
+            <button class="share whatsapp"><img src="assets/whatsapp_3670025.png" alt="whatsapp"></img></button>
+            <button class="share linkedin"><img src="assets/social_10110406.png" alt="linkedin"></img></button>
+            <button class="share twitter"><img src="assets/twitter_5969020.png" alt="twitter"></img></button>
           </div>
         </div>
       </div>
     `;
         document.body.appendChild(modal);
+        console.log("Modal has been created and appended");
         return modal;
     }
     setupShareListeners() {
@@ -352,7 +381,11 @@ class ShareManager {
         if (shareBtn) {
             shareBtn.addEventListener("click", () => {
                 this.showModal();
+                console.log("Share button clicked");
             });
+        }
+        else {
+            console.error("Share button not found");
         }
         const closeBtn = this.modal.querySelector(".modal-close");
         if (closeBtn) {
@@ -375,7 +408,7 @@ class ShareManager {
         const copyBtn = this.modal.querySelector("#copy-link");
         const shareLink = this.modal.querySelector("#share-link");
         if (copyBtn && shareLink) {
-            shareLink.value = window.location.href;
+            shareLink.value = this.generateUniqueResumeLink();
             copyBtn.addEventListener("click", () => {
                 shareLink.select();
                 document.execCommand("copy");
@@ -386,12 +419,46 @@ class ShareManager {
         const overlay = this.modal.querySelector(".modal-overlay");
         if (overlay) {
             overlay.style.display = "flex";
+            console.log("Modal shown");
+        }
+        else {
+            console.error("Modal overlay not found");
         }
     }
     closeModal() {
         const overlay = this.modal.querySelector(".modal-overlay");
         if (overlay) {
             overlay.style.display = "none";
+        }
+    }
+    generateUniqueResumeLink() {
+        const userName = this.getStoredUserName();
+        const userId = this.getUserId(); // Assuming you have a method to get a unique user ID
+        const timestamp = new Date().getTime(); // Timestamp to make the URL unique over time
+        // Combine the userName, userId, and timestamp to create a truly unique link
+        const uniqueId = `${userId}-${timestamp}`;
+        // Get the base URL
+        const baseUrl = window.location.href.split("?")[0]; // Remove any existing query parameters
+        // URL-encode the user information to make it URL-safe
+        const encodedUserName = encodeURIComponent(userName);
+        const encodedUniqueId = encodeURIComponent(uniqueId);
+        // Generate the unique resume link
+        const uniqueResumeLink = `${baseUrl}?user=${encodedUserName}&id=${encodedUniqueId}`;
+        console.log("Generated unique resume link:", uniqueResumeLink);
+        return uniqueResumeLink;
+    }
+    // Example method to get the user ID (you can modify this logic based on your app)
+    getUserId() {
+        // This could come from user authentication data, session, or a generated user ID
+        const storedUserId = localStorage.getItem("userId");
+        if (storedUserId) {
+            return storedUserId;
+        }
+        else {
+            // If no user ID exists, generate one for the session (can be improved for production)
+            const generatedId = Math.random().toString(36).substr(2, 9); // Random alphanumeric ID
+            localStorage.setItem("userId", generatedId);
+            return generatedId;
         }
     }
     shareOnPlatform(event) {
@@ -414,69 +481,93 @@ class ShareManager {
         return ["whatsapp", "linkedin", "twitter"].includes(platform);
     }
 }
-// 3. Edit Manager
 class EditManager {
     constructor() {
         this.isEditing = false;
         this.editableElements = [
-            ".profile-description",
-            ".education-content",
-            ".experience-content",
-            ".skills-list li",
-            ".languages-list li",
-            ".em-span",
-            ".con-span",
-            ".Add-span",
+            ".profile-name", // Profile name
+            ".profile-description", // Profile description
+            ".em-span", // Email
+            ".con-span", // Contact
+            ".Add-span", // Address
+            ".languages-list li", // Languages list items
+            ".education-content", // Education content
+            ".experience-content", // Experience content
+            ".skills-list li", // Skills list items
         ];
         this.setupEditListeners();
     }
+    toggleNavbarFooterVisibility() {
+        const navbar = document.getElementById("heading-nav-bar");
+        const footer = document.getElementById("footer");
+        if (navbar) {
+            navbar.style.display = this.isEditing ? "none" : "flex";
+        }
+        if (footer) {
+            footer.style.display = this.isEditing ? "none" : "flex";
+        }
+    }
     setupEditListeners() {
         var _a;
+        // Listen for the "edit" button click to toggle edit mode
         (_a = document.getElementById("edit-btn")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => {
             this.toggleEditMode();
+        });
+        // Wait until DOM is fully loaded to ensure elements exist
+        document.addEventListener("DOMContentLoaded", () => {
+            this.initializeEditableElements();
+        });
+    }
+    initializeEditableElements() {
+        // Loop through the editable elements and add click listeners for editing
+        this.editableElements.forEach((selector) => {
+            document.querySelectorAll(selector).forEach((el) => {
+                const htmlElement = el;
+                htmlElement.addEventListener("click", () => this.toggleContentEditable(htmlElement));
+            });
         });
     }
     toggleEditMode() {
         this.isEditing = !this.isEditing;
-        document.querySelectorAll("h1, h2, h3, h4, h5, h6, label").forEach((el) => {
-            el.classList.add("non-editable");
-        });
-        this.editableElements.forEach((selector) => {
-            document.querySelectorAll(selector).forEach((el) => {
-                el.setAttribute("contenteditable", this.isEditing.toString());
-                if (this.isEditing) {
-                    el.classList.add("editable");
-                }
-                else {
-                    el.classList.remove("editable");
-                    this.saveChanges();
-                }
-            });
+        // Enable or disable contenteditable based on whether we are in edit mode
+        document
+            .querySelectorAll(this.editableElements.join(","))
+            .forEach((el) => {
+            const htmlElement = el;
+            if (this.isEditing) {
+                htmlElement.setAttribute("contenteditable", "true");
+                htmlElement.classList.add("editable");
+            }
+            else {
+                htmlElement.removeAttribute("contenteditable");
+                htmlElement.classList.remove("editable");
+                this.saveChanges(); // Save changes when editing is turned off
+            }
         });
         this.updateEditButton();
-        const resumeOutputContainer = document.getElementById("resume-output-container");
-        resumeOutputContainer === null || resumeOutputContainer === void 0 ? void 0 : resumeOutputContainer.classList.toggle("edit-mode", this.isEditing);
-        document.body.style.zIndex = this.isEditing ? "-1111" : "0";
+        this.toggleNavbarFooterVisibility();
+    }
+    toggleContentEditable(element) {
+        // Toggle the contenteditable attribute for the clicked element
+        if (element.isContentEditable) {
+            element.removeAttribute("contenteditable");
+            element.classList.remove("editable");
+            this.saveChanges(); // Save changes when editing is turned off
+        }
+        else {
+            element.setAttribute("contenteditable", "true");
+            element.classList.add("editable");
+        }
     }
     updateEditButton() {
         const editBtn = document.getElementById("edit-btn");
         if (!editBtn)
             return;
         if (this.isEditing) {
-            editBtn.textContent = "Save";
-            Object.assign(editBtn.style, {
-                color: "white",
-                backgroundColor: "var(--primary-bg-color)",
-                border: "1px solid var(--primary-light-color)",
-            });
+            editBtn.textContent = "Save"; // Change button text to "Save" when in edit mode
         }
         else {
-            editBtn.innerHTML = "<img src='assets/pen_18221918.png' alt='edit-btn'>";
-            Object.assign(editBtn.style, {
-                transition: "all 1s ease-in-out",
-                backgroundColor: "var(--primary-light-color)",
-                border: "2px solid var(--primary-bg-color)",
-            });
+            editBtn.innerHTML = "<img src='assets/pen_18221918.png' alt='edit-btn'>"; // Reset button content when not editing
         }
     }
     saveChanges() {
@@ -494,75 +585,190 @@ class EditManager {
             skills: Array.from(document.querySelectorAll(".skills-list li")).map((li) => li.textContent || ""),
             languages: Array.from(document.querySelectorAll(".languages-list li")).map((li) => li.textContent || ""),
         };
+        // Save the updated resume data in localStorage
         localStorage.setItem("resumeData", JSON.stringify(data));
     }
-}
-function html2pdf(resumeElement, p0) {
-    throw new Error("Function not implemented.");
-}
-class createContactUSModal {
-    constructor() {
-        this.modal = this.createModal();
-        this.setupContactUSModal();
-    }
-    setupContactUSModal() {
-        this.setupContactListeners();
-    }
-    createModal() {
-        const modal = document.createElement("div");
-        modal.innerHTML = `
-    <div class="modal-overlay contact-overlay" style="display: none;">
-        <div class="modal-content contact-content">
-          <div class="modal-header">
-            <h3 class="modal-title">Contact Us</h3>
-            <button class="modal-close">&times;</button>    
-          </div>
-          <div class="contact-form">
-            <form id="contact-form">
-              <input type="text" id="name" placeholder="Name">
-              <input type="email" id="email" placeholder="Email">
-              <textarea id="message" placeholder="Message"></textarea>
-            </form>
-          </div>
-        </div>
-      </div>
-    `;
-        document.body.appendChild(modal);
-        return modal;
-    }
-    setupContactListeners() {
-        // Fix: Change from contact-btn to contact-btn class since that's what's in the HTML
-        const contactBtn = document.querySelector(".contact-btn");
-        if (contactBtn) {
-            contactBtn.addEventListener("click", () => {
-                this.showModal();
-            });
-        }
-        const closeBtn = this.modal.querySelector(".modal-close");
-        if (closeBtn) {
-            closeBtn.addEventListener("click", () => this.closeModal());
-        }
-        // Add click handler for overlay to close when clicking outside
-        const overlay = this.modal.querySelector(".modal-overlay");
-        if (overlay) {
-            overlay.addEventListener("click", (e) => {
-                if (e.target === overlay) {
-                    this.closeModal();
-                }
-            });
-        }
-    }
-    showModal() {
-        const overlay = this.modal.querySelector(".modal-overlay");
-        if (overlay) {
-            overlay.style.display = "flex";
-        }
-    }
-    closeModal() {
-        const overlay = this.modal.querySelector(".modal-overlay");
-        if (overlay) {
-            overlay.style.display = "none";
+    loadProfile() {
+        var _a, _b, _c, _d, _e, _f, _g;
+        const storedData = localStorage.getItem("resumeData");
+        if (storedData) {
+            const data = JSON.parse(storedData);
+            // Load data into the respective elements
+            document.querySelector(".profile-name").textContent =
+                ((_a = data.profile) === null || _a === void 0 ? void 0 : _a.name) || "";
+            document.querySelector(".em-span").textContent =
+                ((_b = data.profile) === null || _b === void 0 ? void 0 : _b.email) || "";
+            document.querySelector(".con-span").textContent =
+                ((_c = data.profile) === null || _c === void 0 ? void 0 : _c.contact) || "";
+            document.querySelector(".Add-span").textContent =
+                ((_d = data.profile) === null || _d === void 0 ? void 0 : _d.address) || "";
+            document.querySelector(".profile-description").textContent =
+                ((_e = data.profile) === null || _e === void 0 ? void 0 : _e.profileText) || "";
+            document.querySelector(".education-content").textContent =
+                data.education || "";
+            document.querySelector(".experience-content").textContent =
+                data.experience || "";
+            const skillsList = document.querySelector(".skills-list");
+            if (skillsList) {
+                (_f = data.skills) === null || _f === void 0 ? void 0 : _f.forEach((skill) => {
+                    const li = document.createElement("li");
+                    li.textContent = skill;
+                    skillsList.appendChild(li);
+                });
+            }
+            const languagesList = document.querySelector(".languages-list");
+            if (languagesList) {
+                (_g = data.languages) === null || _g === void 0 ? void 0 : _g.forEach((language) => {
+                    const li = document.createElement("li");
+                    li.textContent = language;
+                    languagesList.appendChild(li);
+                });
+            }
         }
     }
 }
+export {};
+// class createContactUSModal {
+//   private modal: HTMLDivElement;
+//   constructor() {
+//     this.modal = this.createModal();
+//     this.setupContactUSModal();
+//   }
+//   private setupContactUSModal(): void {
+//     this.setupContactListeners();
+//   }
+//   private createModal(): HTMLDivElement {
+//     const modal = document.createElement("div");
+//     modal.innerHTML = `
+//     <div class="modal-overlay contact-overlay" style="display: none;">
+//         <div class="modal-content contact-content">
+//           <div class="modal-header">
+//             <h3 class="modal-title">Contact Us</h3>
+//             <button class="modal-close">&times;</button>
+//           </div>
+//           <div class="contact-form">
+//             <form id="contact-form">
+//               <input type="text" id="name" placeholder="Name">
+//               <input type="email" id="email" placeholder="Email">
+//               <textarea id="message" placeholder="Message"></textarea>
+//             </form>
+//           </div>
+//         </div>
+//       </div>
+//     `;
+//     document.body.appendChild(modal);
+//     return modal;
+//   }
+//   private setupContactListeners(): void {
+//     // Fix: Change from contact-btn to contact-btn class since that's what's in the HTML
+//     const contactBtn = document.querySelector(".contact-btn");
+//     if (contactBtn) {
+//       contactBtn.addEventListener("click", () => {
+//         this.showModal();
+//       });
+//     }
+//     const closeBtn = this.modal.querySelector(".modal-close");
+//     if (closeBtn) {
+//       closeBtn.addEventListener("click", () => this.closeModal());
+//     }
+//     // Add click handler for overlay to close when clicking outside
+//     const overlay = this.modal.querySelector(".modal-overlay");
+//     if (overlay) {
+//       overlay.addEventListener("click", (e) => {
+//         if (e.target === overlay) {
+//           this.closeModal();
+//         }
+//       });
+//     }
+//   }
+//   private showModal(): void {
+//     const overlay = this.modal.querySelector(".modal-overlay") as HTMLElement;
+//     if (overlay) {
+//       overlay.style.display = "flex";
+//     }
+//   }
+//   private closeModal(): void {
+//     const overlay = this.modal.querySelector(".modal-overlay") as HTMLElement;
+//     if (overlay) {
+//       overlay.style.display = "none";
+//     }
+//   }
+// }
+// class Dashboard {
+//   private dashboard: HTMLDivElement;
+//   constructor() {
+//     this.dashboard = this.createDashboardSection();
+//     this.initializeProfile(); // Initialize profile on dashboard creation
+//     this.setupDashboardListeners();
+//   }
+//   private createDashboardSection(): HTMLDivElement {
+//     const dashboard = document.createElement("div");
+//     dashboard.id = "dashboard-section";
+//     dashboard.innerHTML = `
+//       <div id="profile-inp-div">
+//         <h2 id="dash-profile">Profile</h2>
+//         <input type="text" id="profile-nam-inp">
+//         <input type="file" id="profile-pic-inp">
+//         <button id="saveProfileBtn">Done</button>
+//       </div>
+//       <div id="center-div">
+//         <div id="dash-pic"></div>
+//         <h1 id="dash-name">Full Name</h1>
+//       </div>
+//       <div>
+//         <h2 id="dash-download">Download</h2>
+//         <h3>no downloads yet</h3>
+//       </div>
+//     `;
+//     document.body.appendChild(dashboard);
+//     return dashboard;
+//   }
+//   private setupDashboardListeners(): void {
+//     const dashboardBtn = document.querySelector("#nav-dash");
+//     if (dashboardBtn) {
+//       dashboardBtn.addEventListener("click", () => {
+//         this.toggleDashboard(); // Toggle the dashboard visibility when clicked
+//       });
+//     }
+//   }
+//   private toggleDashboard(): void {
+//     this.dashboard.classList.toggle("show-dashboard");
+//   }
+//   // Function to initialize profile from localStorage (called on page load)
+//   private initializeProfile(): void {
+//     const storedName = localStorage.getItem("profileName");
+//     const storedPic = localStorage.getItem("profilePic");
+//     if (storedName) {
+//       // Update profile if name exists in localStorage
+//       this.updateProfile(storedName, storedPic || "");
+//     }
+//   }
+//   // Function to update profile name and profile picture from localStorage
+//   private updateProfile(name: string, image: string): void {
+//     const profileNameElement = document.querySelector(
+//       "#dash-name"
+//     ) as HTMLHeadingElement;
+//     const profilePicElement = document.getElementById(
+//       "dash-pic"
+//     ) as HTMLDivElement;
+//     if (profileNameElement) {
+//       profileNameElement.textContent = name; // Update the name
+//     }
+//     if (profilePicElement && image) {
+//       const img = document.createElement("img");
+//       img.src = image;
+//       img.alt = "Profile Picture";
+//       img.style.width = "100px";
+//       img.style.height = "100px";
+//       img.style.borderRadius = "50%";
+//       img.style.objectFit = "cover";
+//       profilePicElement.innerHTML = ""; // Clear any existing content
+//       profilePicElement.appendChild(img); // Append the new image
+//     }
+//   }
+// }
+// // Initialize the dashboard
+// document.addEventListener("DOMContentLoaded", () => {
+//   new Dashboard(); // Instantiate and setup the dashboard
+// });
 //# sourceMappingURL=manager.js.map

@@ -89,14 +89,11 @@ main {
   background: rgba(0, 0, 0, 0.5);
   display: none;
   z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .modal-content {
   background: white;
-  padding: 40px 20px 20px;
+  padding: 50px 20px;
   border-radius: 8px;
   position: relative;
   max-width: 500px;
@@ -147,7 +144,7 @@ main {
 
 .modal-header {
   position: absolute;
-  top: 8px;
+  top: 4px;
   left: 14px;
   width: 90%;
   height: 40px;
@@ -160,7 +157,7 @@ main {
 .modal-title {
   margin: 0;
   font-size: 1.5em;
-  color: #333;
+  color: var(--primary-bg-color);
 }
 
 /* Remove dotted line in edit mode */
@@ -208,12 +205,11 @@ main {
 /* Modal close button */
 .modal-close {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  right: 16px;
   font-size: 24px;
   cursor: pointer;
   width: 30px;
-  height: 30px;
+  height: 40px;
   border: none;
   background: none;
   display: flex;
@@ -299,3 +295,122 @@ main {
   margin: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 } */
+
+.share-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 1000;
+}
+
+.share-content {
+  top: 0;
+  left: 0;
+  height: 150px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.share-buttons {
+  width: 95%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding-left: 12px;
+}
+
+.whatsapp {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+}
+
+.linkedin {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+}
+
+.twitter {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+}
+
+.share {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.share img {
+  width: 40px;
+  height: 40px;
+}
+
+.share img:hover {
+  scale: 1.04;
+}
+
+#share-link-container {
+  width: 90%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 36px;
+}
+
+#share-link {
+  width: 100%;
+  border: 1px solid var(--primary-bg-color);
+  border-radius: 62px;
+  padding: 0px 10px;
+}
+
+#share-link:hover {
+  border: 2px solid var(--primary-bg-color);
+}
+
+#copy-link {
+  height: 24px;
+  width: 100px;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-light-color);
+  border: none;
+  border-radius: 62px;
+  box-shadow: 0 2px 4px rgba(0.2, 0.2, 0.2, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#copy-link:hover {
+  scale: 1.05;
+  background-color: #1976d2;
+  cursor: pointer;
+}
+
+#copy-link:active {
+  background-color: var(--primary-light-color);
+  color: var(--primary-bg-color);
+}
+
+#share-heading {
+  height: 20px;
+  width: 95%;
+  background-color: var(--primary-black-color);
+  color: var(--primary-light-color);
+  border-radius: 62px;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -116,5 +116,5 @@
       "path": ["./node_modules/@types/node/path.d.ts"]
     }
   },
-  "include": ["Scripts/**/*.ts"]
+  "include": ["Scripts/**/*.ts", "global.d.ts"]
 }

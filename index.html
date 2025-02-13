@@ -23,10 +23,35 @@
                                                                                                     </h1>
                                                                                 </a>
                                                                                 <h1 id="nav-heading">Contact us</h1>
-                                                                                <h1 id="nav-heading">Dashboard</h1>
+                                                                                <h1 id="nav-heading" id="nav-dash">
+                                                                                                    Dashboard</h1>
                                                             </div>
                                         </nav>
                     </header>
+                    <div id="profile-popup" style="display: none;">
+                                        <div class="popup-overlay">
+                                                            <div class="popup-content">
+                                                                                <h2>Enter Your Name & Upload Profile
+                                                                                                    Picture</h2>
+                                                                                <label for="nameInput">Enter your
+                                                                                                    name:</label>
+                                                                                <input type="text" id="nameInput"
+                                                                                                    placeholder="Enter your name" />
+
+                                                                                <label for="profilePicInput">Upload
+                                                                                                    Profile Picture
+                                                                                                    (Optional):</label>
+                                                                                <input type="file" id="profilePicInput"
+                                                                                                    accept="image/*" />
+
+                                                                                <button id="saveProfileBtn">Save
+                                                                                                    Profile</button>
+                                                            </div>
+                                                            <div class="popup-heading">
+                                                                                <h1>RESUME BUILDER</h1>
+                                                            </div>
+                                        </div>
+                    </div>
                     <Main>
                                         <div id="dashboard-section">
                                                             <div id="profile-inp-div">
@@ -61,7 +86,8 @@
                     <footer id="footer">
                                         <p id="footer-content">Created by Aman</p>
                     </footer>
-                    <script type="module" src="Scripts/main.js"></script>
+                    <script type="module" src="dist/main.js"></script>
+                    <script type="module" src="dist/resume-output/manager.js"></script>
 
 </body>
 
