@@ -37,10 +37,13 @@ class DownloadManager {
           </div>
           <div class="download-preview" id="download-preview"></div>
           <div class="download-controls">
+            <div id="format-container">
+            <h5 id="format-heading">Select Format</h5>
             <select id="format" class="format-select">
               <option value="pdf">PDF Document</option>
               <option value="png">PNG Image</option>
             </select>
+            </div>
             <button id="confirm-download" class="download-btn">Download Resume</button>
           </div>
         </div>
@@ -106,7 +109,7 @@ class DownloadManager {
             return;
         }
         const jsPDF = window.jsPDF;
-        const html2canvas = window.html2canvas;
+        // const html2canvas = window.html2canvas;
         // Create a new jsPDF instance
         const jsPdf = new jsPDF("p", "pt", "letter");
         const themeNumber = ((_a = new URLSearchParams(window.location.search).get("theme")) === null || _a === void 0 ? void 0 : _a.slice(-1)) ||
