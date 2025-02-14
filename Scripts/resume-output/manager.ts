@@ -607,7 +607,8 @@ class EditManager {
     if (this.isEditing) {
       editBtn.textContent = "Save"; // Change button text to "Save" when in edit mode
     } else {
-      editBtn.innerHTML = "<img src='assets/pen_18221918.png' alt='edit-btn'>"; // Reset button content when not editing
+      editBtn.innerHTML =
+        "<img src='assets/pencil_12281340.png' alt='edit-btn'>"; // Reset button content when not editing
     }
   }
 
