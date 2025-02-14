@@ -1,11 +1,3 @@
-// import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
-// import { saveAs } from "file-saver";
-
-import { jsPDF } from "jspdf";
-
-// import "./Styles/resume-output.css";
-
 // // Initialize after DOM load
 document.addEventListener("DOMContentLoaded", () => {
   try {
@@ -21,12 +13,6 @@ function initializeManagers(): void {
   new ShareManager();
   new EditManager();
   // new createContactUSModal();
-}
-
-declare global {
-  interface Window {
-    html2canvas: any; // Declare html2canvas as a global property of the window object
-  }
 }
 
 class DownloadManager {
@@ -57,8 +43,8 @@ class DownloadManager {
             <div id="format-container">
             <h5 id="format-heading">Select Format</h5>
             <select id="format" class="format-select">
-              <option value="pdf">PDF Document</option>
               <option value="png">PNG Image</option>
+              <option value="pdf">PDF Document</option>
             </select>
             </div>
             <button id="confirm-download" class="download-btn">Download Resume</button>
@@ -76,6 +62,7 @@ class DownloadManager {
     if (downloadBtn) {
       downloadBtn.addEventListener("click", () => {
         this.showModal();
+        this.generatePreview();
       });
     }
 
@@ -86,7 +73,7 @@ class DownloadManager {
           (this.modal.querySelector("#format") as HTMLSelectElement)?.value ||
           "pdf";
         if (format === "pdf") {
-          this.generatePdf();
+          this.generateHighQualityPdf();
         } else if (format === "png") {
           this.generatePng();
         }
@@ -122,44 +109,105 @@ class DownloadManager {
     }
   }
 
-  // Generate PDF from resume content
-  private generatePdf(): void {
-    // Ensure html2canvas is loaded before use
-    if (!window.html2canvas) {
-      console.error("html2canvas is not loaded.");
-      return;
-    }
-
-    const jsPDF = window.jsPDF;
-    // const html2canvas = window.html2canvas;
-
-    // Create a new jsPDF instance
-    const jsPdf = new jsPDF("p", "pt", "letter");
-
+  private async generateHighQualityPdf(): Promise<void> {
     const themeNumber =
       new URLSearchParams(window.location.search).get("theme")?.slice(-1) ||
       "1";
     const htmlElement = document.getElementById(`resume${themeNumber}-output`);
+    if (!htmlElement) return;
 
-    if (htmlElement) {
+    // Show loading state
+    const downloadBtn = this.modal.querySelector("#confirm-download");
+    if (downloadBtn) {
+      downloadBtn.textContent = "Preparing download...";
+      downloadBtn.setAttribute("disabled", "true");
+    }
+
+    // Create deep clone with styles
+    const clone = htmlElement.cloneNode(true) as HTMLElement;
+    clone.style.width = "450px"; // Match PDF paper width
+    clone.style.border = "1px solid #4361ee";
+    clone.style.transform = "none"; // Remove any transforms
+    clone.style.boxShadow = "none"; // Remove shadows that cause artifacts
+    clone.style.cssText = `
+    @import url("//fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+    font-family: "Kanit" !important;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px,
+      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px !important;
+
+    `;
+
+    // Create a wrapper with white background
+    const wrapper = document.createElement("div");
+    wrapper.style.cssText = `
+            position: fixed;
+            top: -9999px;
+            left: -9999px;
+            background: white;
+            width: 210mm;
+            min-height: 297mm;
+          `;
+    wrapper.appendChild(clone);
+    document.body.appendChild(wrapper);
+
+    clone.querySelectorAll("*").forEach((el) => {
+      (el as HTMLElement).style.cssText += window.getComputedStyle(el).cssText;
+    });
+
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+
+    try {
+      // 1. WAIT FOR FONTS FIRST
+      await document.fonts.ready;
+
+      // 2. SET UP PDF OPTIONS
+      // Change the PDF initialization
+      const doc = new window.jspdf.jsPDF({
+        orientation: "p",
+        unit: "pt",
+        format: "a4",
+        hotfixes: ["px_scaling"],
+        compress: true, // Fix pixel scaling
+      });
       const options = {
         margin: [72, 72, 72, 72],
-        autoPaging: "text" as "text",
         html2canvas: {
           allowTaint: true,
+          useCORS: true,
+          scale: 1,
           dpi: 300,
-          letterRendering: true,
-          logging: false,
-          scale: 0.8,
+          async: true,
+          letterRendering: false, // Disable for cleaner text
+          logging: true,
+          onclone: (clonedDoc: Document) => {
+            // Fix font inheritance without modifying ready property
+            clonedDoc.body.style.fontFamily = getComputedStyle(
+              document.body
+            ).fontFamily;
+            clonedDoc.body.style.cssText += document.body.style.cssText;
+          },
         },
-        callback: (jsPdf: jsPDF) => {
-          jsPdf.save("Resume.pdf"); // Save the PDF
+        callback: (pdf: typeof doc) => {
+          pdf.save(
+            `Professional_Resume-${new Date().toISOString().split("T")[0]}.pdf`
+          );
+          document.body.removeChild(clone);
         },
       };
 
-      jsPdf.html(htmlElement, options);
-    } else {
-      console.error("Target HTML element not found");
+      // 3. ADD DELAY FOR RENDERING
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await doc.html(clone, options);
+    } catch (err) {
+      console.error("PDF Generation Error:", err);
+      document.body.removeChild(clone);
+    } finally {
+      let downloadBtn = this.modal.querySelector("#confirm-download");
+      if (downloadBtn) {
+        downloadBtn.textContent = "Download Resume";
+        downloadBtn.removeAttribute("disabled");
+      }
     }
   }
 
@@ -189,173 +237,72 @@ class DownloadManager {
       console.error("Target HTML element not found for PNG");
     }
   }
+
+  private async generatePreview(): Promise<void> {
+    const previewContainer = this.modal.querySelector("#download-preview");
+    const themeNumber =
+      new URLSearchParams(window.location.search).get("theme")?.slice(-1) ||
+      "1";
+    const element = document.querySelector(`#resume${themeNumber}-output`);
+
+    if (!previewContainer || !element) return;
+
+    try {
+      previewContainer.innerHTML =
+        '<div class="preview-loading">Generating preview...</div>';
+
+      // 1. Target dimensions
+      const targetHeight = 250; // Your desired preview height
+      // const aspectRatio = 210 / 297; // A4 aspect ratio (width/height)
+      const targetWidth = 220; // ≈ 177px
+
+      // 3. Create hidden clone with original size
+      const clone = element.cloneNode(true) as HTMLElement;
+      clone.style.cssText = `
+        position: absolute;
+        left: -9999px;
+        width: 450px;
+        height: 520px;
+        opacity: 0.999;  
+      `;
+      document.body.appendChild(clone);
+
+      // 4. Calculate precise scale factor
+      // const scale = (targetHeight / originalHeight) * window.devicePixelRatio;
+
+      // 5. Render optimized canvas
+      const canvas = await window.html2canvas(clone, {
+        scale: 10,
+        windowWidth: 220,
+        windowHeight: 250,
+        useCORS: true,
+        logging: true,
+        backgroundColor: "#ffffff",
+      });
+
+      // 6. Create downscaled preview image
+      const previewImg = new Image();
+      previewImg.src = canvas.toDataURL("image/svg");
+      previewImg.style.cssText = `
+        width: ${targetWidth}px;
+        height: ${targetHeight}px;
+        image-rendering: crisp-edges;
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px,
+      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px !important;
+      `;
+
+      // 7. Cleanup and display
+      document.body.removeChild(clone);
+      previewContainer.innerHTML = "";
+      previewContainer.appendChild(previewImg);
+    } catch (error) {
+      console.error("Preview failed:", error);
+      previewContainer.innerHTML =
+        '<div class="preview-error">Preview generation failed</div>';
+    }
+  }
 }
-
-// private async downloadFile(fileUrl: string, filename: string): Promise<void> {
-//   try {
-//     const response = await fetch(fileUrl);
-//     if (!response.ok) {
-//       throw new Error("Network response was not ok");
-//     }
-//     const blob = await response.blob();
-//     const blobUrl = URL.createObjectURL(blob);
-//     const img = new Image();
-//     await new Promise((resolve, reject) => {
-//       img.onload = resolve;
-//       img.onerror = reject;
-//       img.src = blobUrl;
-//     });
-//     const pdf = new jsPDF();
-//     pdf.addImage(img, "PNG", 0, 0, 210, 297);
-//     pdf.save(filename);
-//     const url = window.URL.createObjectURL(blob);
-//     const a = document.createElement("a");
-//     a.style.display = "none";
-//     a.href = url;
-//     a.download = filename;
-//     document.body.appendChild(a);
-//     a.click();
-//     document.body.removeChild(a);
-//     window.URL.revokeObjectURL(url);
-//   } catch (error) {
-//     console.error("There was a problem with the fetch operation:", error);
-//   }
-// }
-
-// private async downloadResume(format: string): Promise<void> {
-//   try {
-//     const themeNumber =
-//       (await new URLSearchParams(window.location.search)
-//         .get("theme")
-//         ?.slice(-1)) || "1";
-//     const element = await document.querySelector(
-//       `resume${themeNumber}-output`
-//     );
-//     if (!element) {
-//       throw new Error("Resume container not found");
-//     }
-
-//     // Show loading state
-//     const downloadBtn = this.modal.querySelector("#confirm-download");
-//     if (downloadBtn) {
-//       downloadBtn.textContent = "Preparing download...";
-//       downloadBtn.setAttribute("disabled", "true");
-//     }
-
-//     const clone = (await element.cloneNode(true)) as HTMLElement;
-//     clone.style.cssText = `
-//       width: 210mm;
-//       min-height: 297mm;
-//       padding: 20mm;
-//       background: white;
-//     `;
-
-//     // Create a wrapper with white background
-//     const wrapper = await document.createElement("div");
-//     wrapper.style.cssText = `
-//       position: fixed;
-//       top: -9999px;
-//       left: -9999px;
-//       background: white;
-//       width: 210mm;
-//       min-height: 297mm;
-//     `;
-//     wrapper.appendChild(clone);
-//     document.body.appendChild(wrapper);
-//     try {
-//       const canvas = await html2canvas(wrapper, {
-//         scale: 2,
-//         useCORS: true,
-//         allowTaint: true,
-//         backgroundColor: "#ffffff",
-//         logging: true,
-//         foreignObjectRendering: true,
-//       });
-//       if (format === "pdf") {
-//         const pdf = await new jsPDF.jsPDF({
-//           orientation: "portrait",
-//           unit: "mm",
-//           format: "a4",
-//           compress: true,
-//         });
-
-//         const imgData = canvas.toDataURL("image/jpeg", 1.0);
-//         pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
-//         pdf.save(`resume-${new Date().toISOString().split("T")[0]}.pdf`);
-//       } else {
-//         canvas.toBlob(
-//           (blob: Blob | null) => {
-//             if (blob) {
-//               saveAs(
-//                 blob,
-//                 `resume-${new Date().toISOString().split("T")[0]}.${format}`
-//               );
-//             }
-//           },
-//           `image/${format}`,
-//           1.0
-//         );
-//       }
-//     } finally {
-//       wrapper.remove();
-//     }
-
-//     this.closeModal();
-//   } catch (error) {
-//     console.error("Download failed:", error);
-//     alert("Download failed. Please try again.");
-//   } finally {
-//     const downloadBtn = this.modal.querySelector("#confirm-download");
-//     if (downloadBtn) {
-//       downloadBtn.textContent = "Download Resume";
-//       downloadBtn.removeAttribute("disabled");
-//     }
-//   }
-// }
-
-// private async generatePreview(): Promise<void> {
-//   const previewContainer = this.modal.querySelector("#download-preview");
-//   // Change selector to match the visible resume template
-//   const element = document.querySelector("#resume1-output");
-
-//   if (!previewContainer || !element) {
-//     console.error("Required elements not found");
-//     return;
-//   }
-
-//   try {
-//     previewContainer.innerHTML =
-//       '<div class="preview-loading">Generating preview...</div>';
-
-//     const clone = element.cloneNode(true) as HTMLElement;
-//     // Adjust clone styles for better preview
-//     clone.style.cssText = `
-//       width: 210mm;
-//       min-height: 297mm;
-//       padding: 20mm;
-//       background: white;
-//       transform: scale(0.2);
-//       transform-origin: top left;
-//     `;
-//     // @ts-ignore
-//     const canvas = await html2canvas(clone, {
-//       scale: 1,
-//       useCORS: true,
-//       allowTaint: true,
-//       backgroundColor: "#ffffff",
-//       logging: true, // Enable logging for debugging
-//       foreignObjectRendering: true,
-//     });
-
-//     previewContainer.innerHTML = "";
-//     canvas.style.cssText = "width: 100%; height: auto; max-height: 400px;";
-//     previewContainer.appendChild(canvas);
-//   } catch (error) {
-//     console.error("Preview generation failed:", error);
-//     previewContainer.innerHTML =
-//       '<div class="preview-error">Preview generation failed</div>';
-//   }
-// }
 
 class ShareManager {
   private readonly modal: HTMLDivElement;
@@ -425,7 +372,7 @@ class ShareManager {
           <div class="share-buttons">
             <button class="share whatsapp"><img src="assets/whatsapp_3670025.png" alt="whatsapp"></img></button>
             <button class="share linkedin"><img src="assets/social_10110406.png" alt="linkedin"></img></button>
-            <button class="share twitter"><img src="assets/twitter_5969020.png" alt="twitter"></img></button>
+            <button class="share twitter"><img src="assets/social-network_15714543.png" alt="twitter"></img></button>
           </div>
         </div>
       </div>
