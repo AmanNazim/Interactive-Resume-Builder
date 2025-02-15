@@ -138,49 +138,6 @@ main {
   gap: 24px;
 }
 
-#dashboard-section {
-  height: 100vh;
-  width: 20vw;
-  box-sizing: border-box;
-  padding: 6% 1% 6% 1%;
-  background-color: var(--primary-color);
-  color: var(--primary-light-color);
-  opacity: 92%;
-  position: fixed;
-  right: 0px;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 2px 2px 1px,
-    rgba(60, 64, 67, 0.15) 0px 2px 2px 1px;
-  display: none;
-}
-
-#center-div {
-  width: 100%;
-  height: 180px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-
-#dash-pic {
-  height: 100px;
-  width: 100px;
-  background-color: var(--primary-light-color);
-  border-radius: 100%;
-}
-
-#dash-pic-input {
-  width: 80%;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  /* margin: 0px 0px 8px 0px; */
-}
-
-#dash-name {
-  margin: 0px;
-}
-
 .resume-img {
   z-index: 1;
   height: 80vh;
@@ -245,23 +202,4 @@ a {
   --primary-color: #4361ee;
   --primary-light-color: white;
   --primary-black: black;
-}
-
-/* Initial state for dashboard - hidden */
-#dashboard-section {
-  position: fixed;
-  right: -300px; /* Hide the dashboard off-screen */
-  top: 0;
-  width: 300px;
-  height: 100%;
-  background-color: #fff;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
-  transition: right 0.3s ease-in-out; /* Smooth transition for showing/hiding */
-  z-index: 999; /* Ensure it is above other content */
-  padding: 20px;
-}
-
-/* When dashboard is visible */
-#dashboard-section.show-dashboard {
-  right: 0; /* Slide in the dashboard from the right */
 }

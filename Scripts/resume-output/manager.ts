@@ -12,7 +12,8 @@ function initializeManagers(): void {
   new DownloadManager();
   new ShareManager();
   new EditManager();
-  // new createContactUSModal();
+  new createContactUSModal();
+  new Dashboard();
 }
 
 class DownloadManager {
@@ -683,165 +684,215 @@ class EditManager {
   }
 }
 
-// class createContactUSModal {
-//   private modal: HTMLDivElement;
+class createContactUSModal {
+  private modal: HTMLDivElement;
 
-//   constructor() {
-//     this.modal = this.createModal();
-//     this.setupContactUSModal();
-//   }
+  constructor() {
+    this.modal = this.createModal();
+    this.setupContactUSModal();
+  }
 
-//   private setupContactUSModal(): void {
-//     this.setupContactListeners();
-//   }
+  private setupContactUSModal(): void {
+    this.setupContactListeners();
+  }
 
-//   private createModal(): HTMLDivElement {
-//     const modal = document.createElement("div");
-//     modal.innerHTML = `
-//     <div class="modal-overlay contact-overlay" style="display: none;">
-//         <div class="modal-content contact-content">
-//           <div class="modal-header">
-//             <h3 class="modal-title">Contact Us</h3>
-//             <button class="modal-close">&times;</button>
-//           </div>
-//           <div class="contact-form">
-//             <form id="contact-form">
-//               <input type="text" id="name" placeholder="Name">
-//               <input type="email" id="email" placeholder="Email">
-//               <textarea id="message" placeholder="Message"></textarea>
-//             </form>
-//           </div>
-//         </div>
-//       </div>
-//     `;
-//     document.body.appendChild(modal);
-//     return modal;
-//   }
+  private createModal(): HTMLDivElement {
+    const modal = document.createElement("div");
+    modal.innerHTML = `
+    <div class="modal-overlay contact-overlay" style="display: none;">
+        <div class="modal-content contact-content">
+          <div class="contact-header">
+            <h3 class="contact-title">Contact Us</h3>
+            <button class="modal-close">&times;</button>
+          </div>
+          <div class="contact-form">
+            <form id="contact-form">
+              <div class="comment-head">
+              <h4 class="comment-heading">Comment US</h4>
+              </div>
+              <div class="name-email">
+              <input type="text" id="contact-name" placeholder="Name">
+              <input type="email" id="contact-email" placeholder="Email">
+              </div>
+              <textarea id="contact-message" placeholder="Message" tabindex="0"></textarea>
+              <button type="button" class="comment-button">Send</button>
+            </form>
+            <div id="social-links">
+            <h4 class="follow-heading">Follow ON Your Favorite Social Media Platforms :</h4>
+            <div class="contact-buttons">
+            <button class="follow whatsapp"><a href="https://www.instagram.com/aman.nazim07/"><img src="assets/instagram_1400813.png" alt="insta"></a></img></button>
+            <button class="follow whatsapp"><a href="https://www.facebook.com/amannazim98"><img src="assets/facebook_408796.png" alt="facebook"></a></img></button>
+            <button class="follow linkedin"><a href="https://www.linkedin.com/in/aman-nazim-b9a0a0305"><img src="assets/linkedin_255287.png" alt="linkedin"></a></img></button>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    return modal;
+  }
 
-//   private setupContactListeners(): void {
-//     // Fix: Change from contact-btn to contact-btn class since that's what's in the HTML
-//     const contactBtn = document.querySelector(".contact-btn");
-//     if (contactBtn) {
-//       contactBtn.addEventListener("click", () => {
-//         this.showModal();
-//       });
-//     }
+  private setupContactListeners(): void {
+    // Fix: Change from contact-btn to contact-btn class since that's what's in the HTML
+    const contactBtn = document.querySelector(".contact-btn");
+    if (contactBtn) {
+      contactBtn.addEventListener("click", () => {
+        this.showModal();
+      });
+    }
 
-//     const closeBtn = this.modal.querySelector(".modal-close");
-//     if (closeBtn) {
-//       closeBtn.addEventListener("click", () => this.closeModal());
-//     }
+    const closeBtn = this.modal.querySelector(".modal-close");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => this.closeModal());
+    }
 
-//     // Add click handler for overlay to close when clicking outside
-//     const overlay = this.modal.querySelector(".modal-overlay");
-//     if (overlay) {
-//       overlay.addEventListener("click", (e) => {
-//         if (e.target === overlay) {
-//           this.closeModal();
-//         }
-//       });
-//     }
-//   }
+    // Add click handler for overlay to close when clicking outside
+    const overlay = this.modal.querySelector(".modal-overlay");
+    if (overlay) {
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) {
+          this.closeModal();
+        }
+      });
+    }
+  }
 
-//   private showModal(): void {
-//     const overlay = this.modal.querySelector(".modal-overlay") as HTMLElement;
-//     if (overlay) {
-//       overlay.style.display = "flex";
-//     }
-//   }
+  private showModal(): void {
+    const overlay = this.modal.querySelector(".modal-overlay") as HTMLElement;
+    if (overlay) {
+      overlay.style.display = "flex";
+    }
+  }
 
-//   private closeModal(): void {
-//     const overlay = this.modal.querySelector(".modal-overlay") as HTMLElement;
-//     if (overlay) {
-//       overlay.style.display = "none";
-//     }
-//   }
-// }
+  private closeModal(): void {
+    const overlay = this.modal.querySelector(".modal-overlay") as HTMLElement;
+    if (overlay) {
+      overlay.style.display = "none";
+    }
+  }
+}
 
-// class Dashboard {
-//   private dashboard: HTMLDivElement;
+class Dashboard {
+  private dashboard: HTMLDivElement;
 
-//   constructor() {
-//     this.dashboard = this.createDashboardSection();
-//     this.initializeProfile(); // Initialize profile on dashboard creation
-//     this.setupDashboardListeners();
-//   }
+  constructor() {
+    this.dashboard = this.createDashboardSection();
+    this.initializeProfile(); // Initialize profile on dashboard creation
+    this.setupDashboardListeners();
+  }
 
-//   private createDashboardSection(): HTMLDivElement {
-//     const dashboard = document.createElement("div");
-//     dashboard.id = "dashboard-section";
-//     dashboard.innerHTML = `
-//       <div id="profile-inp-div">
-//         <h2 id="dash-profile">Profile</h2>
-//         <input type="text" id="profile-nam-inp">
-//         <input type="file" id="profile-pic-inp">
-//         <button id="saveProfileBtn">Done</button>
-//       </div>
-//       <div id="center-div">
-//         <div id="dash-pic"></div>
-//         <h1 id="dash-name">Full Name</h1>
-//       </div>
-//       <div>
-//         <h2 id="dash-download">Download</h2>
-//         <h3>no downloads yet</h3>
-//       </div>
-//     `;
-//     document.body.appendChild(dashboard);
-//     return dashboard;
-//   }
+  private createDashboardSection(): HTMLDivElement {
+    const dashboard = document.createElement("div");
+    dashboard.id = "dashboard-section";
+    dashboard.innerHTML = `
+    <div id="dashboard-overlay">
+    <div id="dashboard-header">
+      <h1 id="dash-heading">Dashboard</h1>
+      <button id="close-dashboard">&times;</button>
+    </div>
+      <div id="profile-inp-div">
+        <h2 id="dash-profile">Profile :</h2>
+      </div>
+      <div id="center-div">
+        <div id="dash-pic"><img src="" alt="profile-pic" id="dash-pic-img"></div>
+        <input type="file" id="profile-pic-inp">
+        <h1 id="dash-name"></h1>
+      </div>
+    </div>
+    `;
+    document.body.appendChild(dashboard);
+    return dashboard;
+  }
 
-//   private setupDashboardListeners(): void {
-//     const dashboardBtn = document.querySelector("#nav-dash");
-//     if (dashboardBtn) {
-//       dashboardBtn.addEventListener("click", () => {
-//         this.toggleDashboard(); // Toggle the dashboard visibility when clicked
-//       });
-//     }
-//   }
+  private setupDashboardListeners(): void {
+    const dashboardBtn = document.querySelector(".nav-dash") as HTMLElement;
+    if (dashboardBtn) {
+      dashboardBtn.addEventListener("click", () => {
+        this.toggleDashboard(); // Toggle the dashboard visibility when clicked
+        this.closeDashboard();
+      });
+    }
+  }
 
-//   private toggleDashboard(): void {
-//     this.dashboard.classList.toggle("show-dashboard");
-//   }
+  private toggleDashboard(): void {
+    this.dashboard.classList.add("show-dashboard");
+  }
 
-//   // Function to initialize profile from localStorage (called on page load)
-//   private initializeProfile(): void {
-//     const storedName = localStorage.getItem("profileName");
-//     const storedPic = localStorage.getItem("profilePic");
+  private closeDashboard(): void {
+    const closeBtn = this.dashboard.querySelector("#close-dashboard");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => {
+        this.dashboard.classList.remove("show-dashboard");
+      });
+    }
+  }
 
-//     if (storedName) {
-//       // Update profile if name exists in localStorage
-//       this.updateProfile(storedName, storedPic || "");
-//     }
-//   }
+  // Function to initialize profile from localStorage (called on page load)
+  private initializeProfile(): void {
+    const storedName = localStorage.getItem("profileName");
+    const storedPic = localStorage.getItem("profilePic");
 
-//   // Function to update profile name and profile picture from localStorage
-//   private updateProfile(name: string, image: string): void {
-//     const profileNameElement = document.querySelector(
-//       "#dash-name"
-//     ) as HTMLHeadingElement;
-//     const profilePicElement = document.getElementById(
-//       "dash-pic"
-//     ) as HTMLDivElement;
+    if (storedName) {
+      // Update profile if name exists in localStorage
+      this.updateProfile(storedName, storedPic || "");
+    }
+  }
 
-//     if (profileNameElement) {
-//       profileNameElement.textContent = name; // Update the name
-//     }
+  // Function to update profile name and profile picture from localStorage
+  private updateProfile(name: string, image: string): void {
+    const profileNameElement = document.querySelector(
+      "#dash-name"
+    ) as HTMLHeadingElement;
+    const profilePicElement = document.getElementById(
+      "dash-pic"
+    ) as HTMLDivElement;
+    const profilePicInp = document.getElementById(
+      "profile-pic-inp"
+    ) as HTMLInputElement;
+    let profilePicimg = document.getElementById(
+      "dash-pic-img"
+    ) as HTMLImageElement;
 
-//     if (profilePicElement && image) {
-//       const img = document.createElement("img");
-//       img.src = image;
-//       img.alt = "Profile Picture";
-//       img.style.width = "100px";
-//       img.style.height = "100px";
-//       img.style.borderRadius = "50%";
-//       img.style.objectFit = "cover";
-//       profilePicElement.innerHTML = ""; // Clear any existing content
-//       profilePicElement.appendChild(img); // Append the new image
-//     }
-//   }
-// }
+    if (profileNameElement) {
+      profileNameElement.textContent = name; // Update the name
+    }
 
-// // Initialize the dashboard
-// document.addEventListener("DOMContentLoaded", () => {
-//   new Dashboard(); // Instantiate and setup the dashboard
-// });
+    // Clear any existing content in the profile picture container
+    profilePicElement.innerHTML = "";
+
+    if (!profilePicimg) {
+      profilePicimg = document.createElement("img");
+      profilePicimg.id = "dash-pic-img";
+    }
+
+    if (profilePicElement && image) {
+      profilePicimg.src = image;
+      profilePicimg.alt = "Profile Picture";
+      profilePicimg.style.width = "100px";
+      profilePicimg.style.height = "100px";
+      profilePicimg.style.borderRadius = "50%";
+      profilePicimg.style.objectFit = "cover";
+      profilePicimg.style.opacity = "100%";
+      profilePicElement.appendChild(profilePicimg);
+      // Append the new image
+    }
+
+    if (profilePicInp) {
+      profilePicInp.addEventListener("change", (e) => {
+        const file = (e.target as HTMLInputElement).files?.[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            const dataUrl = event.target?.result as string;
+            // Update the image element with the newly selected file
+            profilePicimg.src = dataUrl;
+            // Optionally, update localStorage for persistence
+            localStorage.setItem("profilePic", dataUrl);
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+  }
+}

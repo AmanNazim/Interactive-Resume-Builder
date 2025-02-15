@@ -38,3 +38,22 @@ declare class EditManager {
     private saveChanges;
     private loadProfile;
 }
+declare class createContactUSModal {
+    private modal;
+    constructor();
+    private setupContactUSModal;
+    private createModal;
+    private setupContactListeners;
+    private showModal;
+    private closeModal;
+}
+declare class Dashboard {
+    private dashboard;
+    constructor();
+    private createDashboardSection;
+    private setupDashboardListeners;
+    private toggleDashboard;
+    private closeDashboard;
+    private initializeProfile;
+    private updateProfile;
+}
