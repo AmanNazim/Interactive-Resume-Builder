@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Static Resume Builder</title>
+  <title>Resume Builder</title>
   <link rel="stylesheet" href="Styles/form-one-style.css">
   <link rel="stylesheet" href="Styles/manager.css">
 
@@ -113,10 +113,11 @@
             <h5>Contact : <span class="con-span" class="span"></span></h5>
             <h5 class="add-sec">Address : <span class="Add-span" class="span"></span></h5>
           </div>
-          <hr>
+
           <div class="per-inf-div">
+            <hr>
             <h3>Languages :</h3>
-            <ol>
+            <ol id="lan-ol">
               <div>
                 <li></li>
               </div>
@@ -131,12 +132,10 @@
             <p></p>
           </div>
           <div class="resume-template-section experience" data-resume-section="experience" id="exp-div">
-            <hr>
             <h3>Experience :</h3>
             <p></p>
           </div>
           <div class="resume-template-section skills" data-resume-section="skills">
-            <hr>
             <h3>Skills :</h3>
             <ul>
               <li></li>
@@ -145,8 +144,8 @@
         </div>
       </main>
       <main id="resume2-output" class="hidden">
+        <div id="profile-pic-output2"><img id="resume2-profile-pic" src=""></div>
         <div id="resume2-col-1">
-          <div id="profile-pic-output2"><img id="resume2-profile-pic" src=""></div>
           <div id="profile-div">
             <h1></h1>
             <h5></h5>
@@ -158,10 +157,10 @@
             <h5>Contact : <span class="con-span" class="span"></span></h5>
             <h5 class="add-sec">Address : <span class="Add-span" class="span"></span></h5>
           </div>
-          <hr>
           <div class="per-inf-div">
+            <hr>
             <h3>Languages :</h3>
-            <ol>
+            <ol id="lan-ol">
               <div>
                 <li></li>
               </div>
@@ -176,12 +175,10 @@
             <p></p>
           </div>
           <div class="resume-template-section experience" data-resume-section="experience" id="exp-div">
-            <hr>
             <h3>Experience :</h3>
             <p></p>
           </div>
           <div class="resume-template-section skills" data-resume-section="skills">
-            <hr>
             <h3>Skills :</h3>
             <ul>
               <li></li>
@@ -203,10 +200,10 @@
             <h5>Contact : <span class="con-span" class="span"></span></h5>
             <h5 class="add-sec">Address : <span class="Add-span" class="span"></span></h5>
           </div>
-          <hr>
           <div class="per-inf-div">
+            <hr>
             <h3>Languages :</h3>
-            <ol>
+            <ol id="lan-ol">
               <div>
                 <li></li>
               </div>
@@ -221,12 +218,10 @@
             <p></p>
           </div>
           <div class="resume-template-section experience" data-resume-section="experience" id="exp-div">
-            <hr>
             <h3>Experience :</h3>
             <p></p>
           </div>
           <div class="resume-template-section skills" data-resume-section="skills">
-            <hr>
             <h3>Skills :</h3>
             <ul>
               <li></li>
@@ -261,7 +256,7 @@
   <footer id="footer">
     <p id="footer-content">Created by Aman</p>
   </footer>
-  <script type="module" src="Scripts/main.js"></script>
+  <script type="module" src="dist/main.js"></script>
   <script type="module" src="dist/resume-output/manager.js"></script>
 
 </body>

@@ -662,6 +662,9 @@
   opacity: 100%;
   top: 10px;
   border: 2px solid var(--primary-light-color);
+  filter: brightness(200%);
+  filter: saturate(160%);
+  filter: contrast(140%);
 }
 
 #profile-pic-inp {

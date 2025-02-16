@@ -50,13 +50,24 @@ function showProfilePopup() {
 });
 // Function to update profile name and profile picture from localStorage
 function updateProfile(name, image) {
-    const profileNameElement = document.querySelector(".profile-name");
-    const profilePicElement = document.getElementById("resume1-profile-pic");
-    if (profileNameElement) {
-        profileNameElement.textContent = name; // Update the name
+    // Get resume template elements
+    const resumeOutputs = document.querySelectorAll(".resume-section main");
+    const resumeProfilePics = [
+        document.getElementById("resume1-profile-pic"),
+        document.getElementById("resume2-profile-pic"),
+        document.getElementById("resume3-profile-pic"),
+    ];
+    if (resumeOutputs) {
+        resumeOutputs.forEach((resume) => {
+            const profileDiv = resume.querySelector("#profile-div h1");
+            if (profileDiv)
+                profileDiv.textContent = name;
+        }); // Update the name
     }
-    if (profilePicElement && image) {
-        profilePicElement.src = image; // Update the profile picture
+    if (resumeProfilePics && image) {
+        resumeProfilePics.forEach((pic) => {
+            pic.src = image; // Update the profile picture
+        });
     }
 }
 // Function to initialize profile from localStorage (called on page load)
@@ -224,7 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //defining input button dynamically by using it's id.
     document.querySelector("#add-languages-inputs-button"), 
     //defining max adds dynamically.
-    6);
+    4);
 });
 //for themes Selection
 //accessing resume templates using dom by id and storing in variables.
@@ -411,8 +422,8 @@ document.addEventListener("input", (e) => {
             if (!langContainer)
                 return;
             // Column handling logic
-            const columnIndex = Math.floor(index / 3);
-            const liIndex = index % 3;
+            const columnIndex = Math.floor(index / 2);
+            const liIndex = index % 2;
             let column = langContainer.querySelectorAll("div")[columnIndex];
             if (!column) {
                 column = document.createElement("div");

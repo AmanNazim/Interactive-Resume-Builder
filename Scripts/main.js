@@ -43,8 +43,93 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-var _a;
+var _a, _b;
 var _this = this;
+// Function to show the profile input popup
+function showProfilePopup() {
+    var popup = document.getElementById("profile-popup");
+    if (popup) {
+        popup.style.display = "block"; // Show the popup
+    }
+}
+// Handle saving profile data (name and profile picture)
+(_a = document.getElementById("saveProfileBtn")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
+    var nameInput = document.getElementById("nameInput");
+    var profilePicInput = document.getElementById("profilePicInput");
+    var profileName = nameInput.value.trim();
+    var profilePic = profilePicInput.files ? profilePicInput.files[0] : null;
+    if (profileName) {
+        // Save the name to localStorage
+        localStorage.setItem("profileName", profileName);
+        if (profilePic) {
+            // Save the profile picture to localStorage (as a base64 string)
+            var reader_1 = new FileReader();
+            reader_1.onloadend = function () {
+                localStorage.setItem("profilePic", reader_1.result);
+                // Update profile name and profile picture on the page
+                updateProfile(profileName, reader_1.result);
+                // Close the popup
+                closeProfilePopup();
+            };
+            reader_1.readAsDataURL(profilePic); // Read the image as a base64 string
+        }
+        else {
+            // If no picture is uploaded, just update the profile name
+            updateProfile(profileName, "");
+            // Close the popup
+            closeProfilePopup();
+        }
+    }
+    else {
+        alert("Please enter your name.");
+    }
+});
+// Function to update profile name and profile picture from localStorage
+function updateProfile(name, image) {
+    // Get resume template elements
+    var resumeOutputs = document.querySelectorAll(".resume-section main");
+    var resumeProfilePics = [
+        document.getElementById("resume1-profile-pic"),
+        document.getElementById("resume2-profile-pic"),
+        document.getElementById("resume3-profile-pic"),
+    ];
+    if (resumeOutputs) {
+        resumeOutputs.forEach(function (resume) {
+            var profileDiv = resume.querySelector("#profile-div h1");
+            if (profileDiv)
+                profileDiv.textContent = name;
+        }); // Update the name
+    }
+    if (resumeProfilePics && image) {
+        resumeProfilePics.forEach(function (pic) {
+            pic.src = image; // Update the profile picture
+        });
+    }
+}
+// Function to initialize profile from localStorage (called on page load)
+function initializeProfile() {
+    var storedName = localStorage.getItem("profileName");
+    var storedPic = localStorage.getItem("profilePic");
+    if (storedName) {
+        // Update profile if name exists in localStorage
+        updateProfile(storedName, storedPic || "");
+    }
+    else {
+        // If no name in localStorage, show the profile input popup
+        showProfilePopup();
+    }
+}
+// Function to close the profile input popup
+function closeProfilePopup() {
+    var popup = document.getElementById("profile-popup");
+    if (popup) {
+        popup.style.display = "none"; // Close the popup
+    }
+}
+// Initialize the profile on page load
+document.addEventListener("DOMContentLoaded", function () {
+    initializeProfile();
+});
 //managing inputs lists dynamically using a class to define fucnctionality one time and use one
 //functionailty for both languages and skills input.
 var ListsManager = /** @class */ (function () {
@@ -190,7 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //defining input button dynamically by using it's id.
     document.querySelector("#add-languages-inputs-button"), 
     //defining max adds dynamically.
-    6);
+    4);
 });
 //for themes Selection
 //accessing resume templates using dom by id and storing in variables.
@@ -377,8 +462,8 @@ document.addEventListener("input", function (e) {
             if (!langContainer)
                 return;
             // Column handling logic
-            var columnIndex = Math.floor(index_1 / 3);
-            var liIndex = index_1 % 3;
+            var columnIndex = Math.floor(index_1 / 2);
+            var liIndex = index_1 % 2;
             var column = langContainer.querySelectorAll("div")[columnIndex];
             if (!column) {
                 column = document.createElement("div");
@@ -510,8 +595,8 @@ document.querySelectorAll(".themes").forEach(function (theme) {
     });
 });
 // Generate Resume handler
-(_a = document
-    .getElementById("generate-resume")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () { return __awaiter(_this, void 0, void 0, function () {
+(_b = document
+    .getElementById("generate-resume")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", function () { return __awaiter(_this, void 0, void 0, function () {
     var selectedTheme, requiredFields, emptyField, resumeData, imageInput, imageFile, imageUrl, error_1;
     var _a, _b, _c;
     return __generator(this, function (_d) {
