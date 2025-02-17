@@ -896,3 +896,48 @@ class Dashboard {
     }
   }
 }
+
+const buttons = document.querySelectorAll(".hide-buttons");
+
+buttons.forEach((button) => {
+  button.addEventListener("click", function (e) {
+    // Force DOM reflow to reset animation
+    void (button as HTMLElement).offsetWidth;
+
+    // Add temporary active class
+    (button as HTMLElement).classList.add("shining");
+
+    // Remove class after animation
+    setTimeout(() => {
+      (button as HTMLElement).classList.remove("shining");
+    }, 600000);
+  });
+});
+
+// function setupLabelLineFocus(): void {
+//   // Select all input containers
+//   const inputContainers = document.querySelectorAll(
+//     ".input-container"
+//   ) as NodeListOf<HTMLElement>;
+
+//   inputContainers.forEach((container) => {
+//     // Find the input element within the container
+//     const input = container.querySelector(
+//       ".input-style"
+//     ) as HTMLInputElement | null;
+
+//     if (!input) return; // Skip containers without inputs
+
+//     // Add click handler to container
+//     container.addEventListener("click", (event: MouseEvent) => {
+//       // Only focus if clicking directly on the container (not its children)
+//       if (event.target === container) {
+//         input.focus();
+//         container.classList.add("input-container--focused");
+//       }
+//     });
+//   });
+// }
+
+// // Initialize the functionality
+// setupLabelLineFocus();

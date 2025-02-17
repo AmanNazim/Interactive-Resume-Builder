@@ -57,3 +57,5 @@ declare class Dashboard {
     private initializeProfile;
     private updateProfile;
 }
+declare const buttons: NodeListOf<Element>;
+declare function setupLabelLineFocus(): void;

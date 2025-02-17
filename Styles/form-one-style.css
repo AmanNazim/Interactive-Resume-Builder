@@ -50,12 +50,29 @@ body {
   padding-left: 20px;
 }
 
+@media (max-width: 440px) {
+  #heading-nav-bar {
+    padding-left: 10px;
+    height: 40px;
+    width: 100%;
+    font-size: 12px;
+  }
+}
+
 #right-nav-headings {
   width: 400px;
   padding-right: 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+@media (max-width: 440px) {
+  #right-nav-headings {
+    width: 220px;
+    padding-right: 24px;
+    font-size: 10px;
+  }
 }
 
 #right-nav-headings:active {
@@ -76,12 +93,32 @@ a {
   gap: 20px;
 }
 
+@media (max-width: 440px) {
+  #parent-div {
+    height: calc(100vh - 100px);
+    width: 95vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    box-sizing: border-box;
+  }
+}
+
 #resume-content-parent-div {
   width: 600px;
   margin-left: 8px;
   padding-top: 2%;
   display: flex;
   justify-content: start;
+}
+
+@media (max-width: 440px) {
+  #resume-content-parent-div {
+    margin-top: 60px;
+    width: 900px;
+    height: calc(100vh - 70px);
+  }
 }
 
 #resume-content-parent-div {
@@ -109,6 +146,13 @@ a {
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
 
+@media (max-width: 440px) {
+  .resume-section {
+    height: calc(100vh - 100px);
+    width: 95%;
+  }
+}
+
 #resume-content {
   height: calc(100vh - 76px);
   width: 100%;
@@ -120,11 +164,25 @@ a {
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
 
+@media (max-width: 440px) {
+  #resume-content {
+    height: calc(100vh - 150px);
+    width: 95vw;
+  }
+}
+
 main {
   height: calc(100vh - 76px);
   flex: 1 1 calc(100% -12px);
   display: flex;
   justify-content: space-between;
+}
+
+@media (max-width: 440px) {
+  main {
+    height: calc(100vh - 150px);
+    width: 450px;
+  }
 }
 
 #resume-content-coloumn1 {
@@ -153,6 +211,12 @@ main {
   padding-left: 4px;
 }
 
+@media (max-width: 440px) {
+  #resume-content-coloumn1 section {
+    width: 170px;
+  }
+}
+
 #resume-content-coloumn2 section {
   max-height: 150px;
   height: auto;
@@ -161,6 +225,12 @@ main {
   margin: 2px;
   box-sizing: border-box;
   padding-left: 4px;
+}
+
+@media (max-width: 440px) {
+  #resume-content-coloumn2 section {
+    width: 195px;
+  }
 }
 
 main h2 {
@@ -179,6 +249,12 @@ main h2 {
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px,
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+@media (max-width: 440px) {
+  #profile-picture-input {
+    width: 140px;
+  }
 }
 
 #profile-picture-input::file-selector-button {
@@ -208,6 +284,12 @@ main h2 {
   border: none;
 }
 
+@media (max-width: 440px) {
+  #profile-text {
+    width: 140px;
+  }
+}
+
 #personal-information-section {
   height: 156px;
   margin-top: 0px;
@@ -223,6 +305,12 @@ main h2 {
   flex-direction: column;
   gap: 16px;
   margin-top: 8px;
+}
+
+@media (max-width: 440px) {
+  #ul-personal-information {
+    width: 140px;
+  }
 }
 
 .li-style {
@@ -320,6 +408,12 @@ h4 {
   border: none;
 }
 
+@media (max-width: 440px) {
+  #person-education {
+    width: 140px;
+  }
+}
+
 #person-work-experience {
   background-color: var(--primary-light-color);
   font-family: "Kanit";
@@ -328,10 +422,22 @@ h4 {
   border: none;
 }
 
+@media (max-width: 440px) {
+  #person-work-experience {
+    width: 140px;
+  }
+}
+
 .skill-inputs {
   width: 200px;
   height: 16px;
   margin: 2px 4px;
+}
+
+@media (max-width: 440px) {
+  .skill-inputs {
+    width: 140px;
+  }
 }
 
 .inputs-Button {
@@ -395,7 +501,7 @@ h4 {
   background: linear-gradient(
     120deg,
     transparent 10%,
-    rgba(255, 255, 255, 0.4) 50%,
+    rgb(255, 255, 255) 50%,
     transparent 90%
   );
   opacity: 0;
@@ -417,6 +523,12 @@ h4 {
 .hide-buttons:hover {
   box-shadow: 0 2px 4px rgba(var(--primary-bg-color-rgb), 0.1),
     0 4px 8px rgba(var(--primary-bg-color-rgb), 0.08);
+}
+
+@media (max-width: 440px) {
+  #resume-container {
+    display: none;
+  }
 }
 
 #resume-output,

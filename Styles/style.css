@@ -24,6 +24,13 @@ body {
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
+@media (max-width: 440px) {
+  #nav-bar {
+    padding: 0px 10px 0px 10px;
+    height: 40px;
+    font-size: 12px;
+  }
+}
 
 #right-nav-headings {
   width: 400px;
@@ -31,6 +38,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+@media (max-width: 440px) {
+  #right-nav-headings {
+    display: flex;
+    align-items: center;
+    width: 220px;
+    padding-right: 24px;
+    font-size: 10px;
+  }
 }
 
 #right-nav-headings:active {
@@ -59,6 +76,17 @@ body {
   border: 2px solid var(--primary-color);
 }
 
+@media (max-width: 440px) {
+  .popup-overlay {
+    position: absolute;
+    top: calc(50% - 170px);
+    left: calc(50% - 220px);
+    height: 236px;
+    width: 400px;
+    border-radius: 24px;
+  }
+}
+
 .popup-content {
   background-color: var(--primary-light-color);
   width: 250px;
@@ -71,6 +99,13 @@ body {
   border: 2px solid var(--primary-color);
 }
 
+@media (max-width: 440px) {
+  .popup-content {
+    width: 200px;
+    height: 200px;
+  }
+}
+
 .popup-heading {
   width: 100%;
   height: 100%;
@@ -78,12 +113,33 @@ body {
   font-size: xx-large;
 }
 
+@media (max-width: 440px) {
+  .popup-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: large;
+  }
+}
+
 .popup-content h2 {
   color: var(--primary-color);
 }
 
+@media (max-width: 440px) {
+  .popup-content h2 {
+    font-size: medium;
+  }
+}
+
 .popup-content label {
   color: var(--primary-color);
+}
+
+@media (max-width: 440px) {
+  .popup-content label {
+    font-size: small;
+  }
 }
 
 #nameInput {
@@ -94,14 +150,35 @@ body {
   border-radius: 62px;
   padding: 10px;
   border: none;
+  outline: none;
+}
+
+@media (max-width: 440px) {
+  #nameInput {
+    width: 150px;
+  }
 }
 
 #nameInput::-webkit-input-placeholder {
   color: var(--primary-light-color);
 }
 
+@media (max-width: 440px) {
+  #nameInput::-webkit-input-placeholder {
+    font-size: 0.9em;
+    letter-spacing: 0.1em;
+    padding-left: 4px;
+  }
+}
+
 #profilePicInput {
   color: var(--primary-color);
+}
+
+@media (max-width: 440px) {
+  #profilePicInput {
+    font-size: 0.9em;
+  }
 }
 
 #profilePicInput::file-selector-button {
@@ -114,8 +191,22 @@ body {
   border: none;
 }
 
+@media (max-width: 440px) {
+  #profilePicInput::file-selector-button {
+    width: 80px;
+    height: 20px;
+    font-size: 0.9em;
+  }
+}
+
 #profilePicInput::file-selector-button:hover {
   scale: 1.01;
+}
+
+@media (max-width: 440px) {
+  #profilePicInput::file-selector-button:hover {
+    scale: 0.99;
+  }
 }
 
 #saveProfileBtn {
@@ -129,6 +220,15 @@ body {
   font-weight: 600;
   padding: 4px;
   margin-top: 16px;
+  border-radius: 62px;
+  border: 2px solid var(--primary-color);
+}
+
+@media (max-width: 440px) {
+  #saveProfileBtn {
+    font-size: small;
+    margin-top: -5px;
+  }
 }
 
 #saveProfileBtn:hover {
@@ -149,9 +249,26 @@ main {
   gap: 24px;
 }
 
+@media (max-width: 440px) {
+  main {
+    height: 80%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+
 .resume-img {
   z-index: 1;
   height: 80vh;
+}
+
+@media (max-width: 440px) {
+  .resume-img {
+    height: 60vh;
+  }
 }
 
 .main-heading-section {
@@ -162,6 +279,18 @@ main {
   gap: 48px;
 }
 
+@media (max-width: 440px) {
+  .main-heading-section {
+    width: 100%;
+    height: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+}
+
 #main-heading {
   right: 0px;
   height: 150px;
@@ -169,6 +298,15 @@ main {
   font-size: 80px;
   line-height: 80px;
   color: var(--primary-color);
+}
+
+@media (max-width: 440px) {
+  #main-heading {
+    width: 70%;
+    font-size: 50px;
+    line-height: 50px;
+    text-align: center;
+  }
 }
 
 #build-button {
@@ -186,6 +324,16 @@ main {
   --shadow-color: rgba(60, 64, 67, 0.3);
   box-shadow: var(--shadow-color) 0px 1px 2px 0px,
     var(--shadow-color) 0px 1px 3px 1px, var(--shadow-color) 0px 2px 6px 2px;
+}
+
+@media (max-width: 440px) {
+  #build-button {
+    width: 150px;
+    height: 34px;
+    font-size: 18px;
+    margin-top: -32px;
+    padding: 12px;
+  }
 }
 
 #build-button:hover {
