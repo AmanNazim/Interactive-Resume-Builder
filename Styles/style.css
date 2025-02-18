@@ -26,8 +26,9 @@ body {
 }
 @media (max-width: 440px) {
   #nav-bar {
-    padding: 0px 10px 0px 10px;
+    padding-left: 10px;
     height: 40px;
+    width: 100%;
     font-size: 12px;
   }
 }
@@ -42,8 +43,6 @@ body {
 
 @media (max-width: 440px) {
   #right-nav-headings {
-    display: flex;
-    align-items: center;
     width: 220px;
     padding-right: 24px;
     font-size: 10px;
@@ -302,7 +301,7 @@ main {
 
 @media (max-width: 440px) {
   #main-heading {
-    width: 70%;
+    width: 80%;
     font-size: 50px;
     line-height: 50px;
     text-align: center;

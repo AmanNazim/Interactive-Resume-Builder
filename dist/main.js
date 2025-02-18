@@ -554,7 +554,7 @@ document.querySelectorAll(".themes").forEach((theme) => {
 });
 // Generate Resume handler
 (_b = document
-    .getElementById("generate-resume")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", () => __awaiter(void 0, void 0, void 0, function* () {
+    .querySelector(".generate-resume")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", () => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c;
     // Validate theme selection
     const selectedTheme = (_a = document.querySelector(".themes.selected")) === null || _a === void 0 ? void 0 : _a.id;
@@ -632,7 +632,7 @@ function showError(message) {
     background: #f8d7da;
   `;
     errorElement.textContent = message;
-    const generateBtn = document.getElementById("generate-resume");
+    const generateBtn = document.querySelector(".generate-resume");
     (_a = generateBtn === null || generateBtn === void 0 ? void 0 : generateBtn.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(errorElement, generateBtn);
 }
 function readFileAsDataURL(file) {

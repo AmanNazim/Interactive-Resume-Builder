@@ -701,7 +701,7 @@ document.querySelectorAll(".themes").forEach((theme: Element) => {
 
 // Generate Resume handler
 document
-  .getElementById("generate-resume")
+  .querySelector(".generate-resume")
   ?.addEventListener("click", async () => {
     // Validate theme selection
     const selectedTheme =
@@ -803,7 +803,7 @@ function showError(message: string): void {
   `;
   errorElement.textContent = message;
 
-  const generateBtn = document.getElementById("generate-resume");
+  const generateBtn = document.querySelector(".generate-resume");
   generateBtn?.parentNode?.insertBefore(errorElement, generateBtn);
 }
 
