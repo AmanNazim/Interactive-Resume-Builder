@@ -1,6 +1,7 @@
 @import url("//fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900");
 html,
 body {
+  width: 100%;
   height: 100%;
   margin: 0;
   background-color: var(--primary-light-color);
@@ -95,13 +96,12 @@ a {
 
 @media (max-width: 440px) {
   #parent-div {
-    height: calc(100vh - 100px);
-    width: 95vw;
+    height: 80vh;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 20px;
-    box-sizing: border-box;
   }
 }
 
@@ -115,9 +115,9 @@ a {
 
 @media (max-width: 440px) {
   #resume-content-parent-div {
-    margin-top: 60px;
-    width: 900px;
-    height: calc(100vh - 70px);
+    padding-top: 14%;
+    width: 95%;
+    height: calc(100vh - 40vh);
   }
 }
 
@@ -148,8 +148,8 @@ a {
 
 @media (max-width: 440px) {
   .resume-section {
-    height: calc(100vh - 100px);
-    width: 95%;
+    height: calc(80vh);
+    width: 95vw;
   }
 }
 
@@ -166,8 +166,9 @@ a {
 
 @media (max-width: 440px) {
   #resume-content {
-    height: calc(100vh - 150px);
-    width: 95vw;
+    margin-top: 70px;
+    height: 70vh;
+    width: 90vw;
   }
 }
 
@@ -180,8 +181,9 @@ main {
 
 @media (max-width: 440px) {
   main {
-    height: calc(100vh - 150px);
-    width: 450px;
+    /* margin-top: 25px; */
+    height: 70vh;
+    width: 92vw;
   }
 }
 
@@ -197,10 +199,23 @@ main {
   border-left: none;
 }
 
+@media (max-width: 440px) {
+  #resume-content-coloumn1 {
+    width: 45vw;
+    margin: 8px 8px 8px 0px;
+  }
+}
+
 #resume-content-coloumn2 {
   background-color: var(--primary-bg-color);
   color: var(--primary-light-color);
   height: 100%;
+}
+
+@media (max-width: 440px) {
+  #resume-content-coloumn2 {
+    width: 50vw;
+  }
 }
 
 #resume-content-coloumn1 section {
@@ -213,7 +228,7 @@ main {
 
 @media (max-width: 440px) {
   #resume-content-coloumn1 section {
-    width: 170px;
+    width: 40vw;
   }
 }
 
@@ -229,7 +244,7 @@ main {
 
 @media (max-width: 440px) {
   #resume-content-coloumn2 section {
-    width: 195px;
+    width: 45vw;
   }
 }
 
@@ -253,7 +268,7 @@ main h2 {
 
 @media (max-width: 440px) {
   #profile-picture-input {
-    width: 140px;
+    width: 90%;
   }
 }
 
@@ -286,13 +301,19 @@ main h2 {
 
 @media (max-width: 440px) {
   #profile-text {
-    width: 140px;
+    width: 90%;
   }
 }
 
 #personal-information-section {
   height: 156px;
   margin-top: 0px;
+}
+
+@media (max-width: 440px) {
+  #personal-information-section {
+    width: 90%;
+  }
 }
 
 #ul-personal-information {
@@ -309,14 +330,20 @@ main h2 {
 
 @media (max-width: 440px) {
   #ul-personal-information {
-    width: 140px;
+    width: 90%;
   }
 }
 
 .li-style {
   position: relative;
-  height: 20x;
+  height: 20px;
   line-height: 20px;
+}
+
+@media (max-width: 440px) {
+  .li-style {
+    height: 14%;
+  }
 }
 
 .input-style {
@@ -335,6 +362,7 @@ main h2 {
   transition: 0.1s ease;
   z-index: 111;
 }
+
 .labelline {
   font-family: "kanit";
   position: absolute;
@@ -410,7 +438,7 @@ h4 {
 
 @media (max-width: 440px) {
   #person-education {
-    width: 140px;
+    width: 95%;
   }
 }
 
@@ -424,7 +452,7 @@ h4 {
 
 @media (max-width: 440px) {
   #person-work-experience {
-    width: 140px;
+    width: 95%;
   }
 }
 
@@ -436,7 +464,7 @@ h4 {
 
 @media (max-width: 440px) {
   .skill-inputs {
-    width: 140px;
+    width: 90%;
   }
 }
 
@@ -462,6 +490,14 @@ h4 {
   align-items: end;
 }
 
+@media (max-width: 440px) {
+  #buttons-parent-div {
+    position: absolute;
+    bottom: 13%;
+    width: 95vw;
+  }
+}
+
 #buttons {
   height: 60px;
   width: 120px;
@@ -469,6 +505,13 @@ h4 {
   justify-content: space-between;
   flex-direction: column;
   margin-left: 4px;
+}
+
+@media (max-width: 440px) {
+  #buttons {
+    width: 90vw;
+    flex-direction: row;
+  }
 }
 
 .hide-buttons {
@@ -488,6 +531,14 @@ h4 {
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateZ(0); /* Enable hardware acceleration */
+}
+
+@media (max-width: 440px) {
+  .hide-buttons {
+    margin-top: 8%;
+    width: 48%;
+    flex-direction: row;
+  }
 }
 
 /* Shine animation layer */
@@ -545,6 +596,14 @@ h4 {
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px,
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+@media (max-width: 440px) {
+  #resume1-output,
+  #resume2-output,
+  #resume3-output {
+    width: 95%;
+  }
 }
 
 #resume2-output {
@@ -854,7 +913,7 @@ h4 {
   background-color: var(--primary-bg-color);
 }
 
-#generate-resume {
+.generate-resume {
   /* Base Styles */
   height: 32px;
   width: 132px;
@@ -868,7 +927,7 @@ h4 {
   cursor: pointer;
   font-family: "Kanit", sans-serif;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: 0.25px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -878,14 +937,26 @@ h4 {
     var(--shadow-color) 0px 1px 3px 1px, var(--shadow-color) 0px 2px 6px 2px;
 }
 
+@media (min-width: 440px) {
+  #mob-button {
+    display: none;
+  }
+}
+
+@media (max-width: 440px) {
+  .generate-resume {
+    width: 95vw;
+  }
+}
+
 /* Hover Effects */
-#generate-resume:hover {
+.generate-resume:hover {
   transform: scale(1.05);
   box-shadow: 0 2px 4px -1px var(--shadow-color),
     0 4px 5px 0 var(--shadow-color), 0 1px 10px 0 var(--shadow-color);
 }
 
-#generate-resume:active {
+.generate-resume:active {
   transform: scale(0.98);
 }
 

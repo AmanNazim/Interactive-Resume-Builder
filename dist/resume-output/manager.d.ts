@@ -58,4 +58,3 @@ declare class Dashboard {
     private updateProfile;
 }
 declare const buttons: NodeListOf<Element>;
-declare function setupLabelLineFocus(): void;

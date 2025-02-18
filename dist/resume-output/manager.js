@@ -801,24 +801,27 @@ buttons.forEach((button) => {
         }, 600000);
     });
 });
-function setupLabelLineFocus() {
-    // Select all input containers
-    const inputContainers = document.querySelectorAll(".input-container");
-    inputContainers.forEach((container) => {
-        // Find the input element within the container
-        const input = container.querySelector(".input-style");
-        if (!input)
-            return; // Skip containers without inputs
-        // Add click handler to container
-        container.addEventListener("click", (event) => {
-            // Only focus if clicking directly on the container (not its children)
-            if (event.target === container) {
-                input.focus();
-                container.classList.add("input-container--focused");
-            }
-        });
-    });
-}
-// Initialize the functionality
-setupLabelLineFocus();
+// function setupLabelLineFocus(): void {
+//   // Select all input containers
+//   const inputContainers = document.querySelectorAll(
+//     ".input-container"
+//   ) as NodeListOf<HTMLElement>;
+//   inputContainers.forEach((container) => {
+//     // Find the input element within the container
+//     const input = container.querySelector(
+//       ".input-style"
+//     ) as HTMLInputElement | null;
+//     if (!input) return; // Skip containers without inputs
+//     // Add click handler to container
+//     container.addEventListener("click", (event: MouseEvent) => {
+//       // Only focus if clicking directly on the container (not its children)
+//       if (event.target === container) {
+//         input.focus();
+//         container.classList.add("input-container--focused");
+//       }
+//     });
+//   });
+// }
+// // Initialize the functionality
+// setupLabelLineFocus();
 //# sourceMappingURL=manager.js.map
