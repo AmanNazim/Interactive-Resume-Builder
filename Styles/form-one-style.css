@@ -146,13 +146,6 @@ a {
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
 
-@media (max-width: 440px) {
-  .resume-section {
-    height: calc(80vh);
-    width: 95vw;
-  }
-}
-
 #resume-content {
   height: calc(100vh - 76px);
   width: 100%;
@@ -602,7 +595,9 @@ h4 {
   #resume1-output,
   #resume2-output,
   #resume3-output {
-    width: 95%;
+    margin-left: 0px;
+    height: 80vh;
+    width: 95vw;
   }
 }
 

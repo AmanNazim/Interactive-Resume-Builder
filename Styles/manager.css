@@ -10,6 +10,15 @@
   gap: 8px;
 }
 
+@media (max-width: 440px) {
+  .action-buttons {
+    height: 24px;
+    width: 92%;
+    flex-direction: row;
+    margin-bottom: 14px;
+  }
+}
+
 .action-buttons button {
   width: 37px;
   height: 37px;
@@ -104,6 +113,12 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.2s;
+}
+
+@media (max-width: 440px) {
+  .download-btn {
+    width: 90vw;
+  }
 }
 
 .download-btn:hover {
@@ -208,15 +223,6 @@
 
 .modal-close:hover {
   color: #000;
-}
-
-/* New feature styles */
-.word-counter {
-  position: absolute;
-  bottom: -20px;
-  right: 0;
-  font-size: 12px;
-  color: #666;
 }
 
 .version-history {
@@ -413,6 +419,13 @@
   width: 500px;
 }
 
+@media (max-width: 440px) {
+  .contact-content {
+    height: 35vh;
+    width: 80vw;
+  }
+}
+
 .contact-header {
   position: absolute;
   height: 40px;
@@ -423,6 +436,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+@media (max-width: 440px) {
+  .contact-header {
+    height: 20px;
+    width: 97%;
+  }
 }
 
 .contact-title {
@@ -446,10 +466,22 @@
   justify-content: start;
 }
 
+@media (max-width: 440px) {
+  .comment-head {
+    height: 10px;
+  }
+}
+
 .comment-heading {
   color: var(--primary-bg-color);
   font-size: 1.2em;
   font-weight: 200;
+}
+
+@media (max-width: 440px) {
+  .comment-heading {
+    font-size: 1em;
+  }
 }
 
 #contact-form {
@@ -463,6 +495,14 @@
   border: 2px solid var(--primary-bg-color);
   border-radius: 10px;
   padding: 16px;
+}
+
+@media (max-width: 440px) {
+  #contact-form {
+    top: 48px;
+    height: 150px;
+    width: 85%;
+  }
 }
 
 .name-email {
@@ -482,6 +522,12 @@
   color: var(--primary-bg-color);
 }
 
+@media (max-width: 440px) {
+  #contact-name {
+    width: 30%;
+  }
+}
+
 #contact-name::-webkit-input-placeholder {
   color: var(--primary-bg-color);
 }
@@ -494,6 +540,12 @@
   outline: none;
   border: 2px solid var(--primary-bg-color);
   color: var(--primary-bg-color);
+}
+
+@media (max-width: 440px) {
+  #contact-email {
+    width: 70%;
+  }
 }
 
 #contact-email::-webkit-input-placeholder {
@@ -542,6 +594,13 @@
   border-radius: 10px;
 }
 
+@media (max-width: 440px) {
+  #social-links {
+    height: 30%;
+    width: 92%;
+  }
+}
+
 .follow-heading {
   position: absolute;
   bottom: 65px;
@@ -551,6 +610,14 @@
   color: var(--primary-light-color);
   height: auto;
   margin: 0px;
+}
+
+@media (max-width: 440px) {
+  .follow-heading {
+    width: 100%;
+    font-size: 0.8em;
+    font-weight: 600;
+  }
 }
 
 .contact-buttons {

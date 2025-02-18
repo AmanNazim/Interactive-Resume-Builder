@@ -596,7 +596,7 @@ document.querySelectorAll(".themes").forEach(function (theme) {
 });
 // Generate Resume handler
 (_b = document
-    .getElementById("generate-resume")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", function () { return __awaiter(_this, void 0, void 0, function () {
+    .querySelector(".generate-resume")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", function () { return __awaiter(_this, void 0, void 0, function () {
     var selectedTheme, requiredFields, emptyField, resumeData, imageInput, imageFile, imageUrl, error_1;
     var _a, _b, _c;
     return __generator(this, function (_d) {
@@ -674,7 +674,7 @@ function showError(message) {
     errorElement.className = "error-message";
     errorElement.style.cssText = "\n    color: #dc3545;\n    padding: 0.5rem;\n    margin: 0.5rem 0;\n    border: 1px solid #f8d7da;\n    border-radius: 4px;\n    background: #f8d7da;\n  ";
     errorElement.textContent = message;
-    var generateBtn = document.getElementById("generate-resume");
+    var generateBtn = document.querySelector(".generate-resume");
     (_a = generateBtn === null || generateBtn === void 0 ? void 0 : generateBtn.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(errorElement, generateBtn);
 }
 function readFileAsDataURL(file) {
