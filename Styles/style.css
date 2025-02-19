@@ -59,6 +59,16 @@ body {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 111;
+  display: none;
+}
+
+@media (max-width: 440px) {
+  #profile-popup {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
 }
 
 .popup-overlay {
@@ -78,10 +88,10 @@ body {
 @media (max-width: 440px) {
   .popup-overlay {
     position: absolute;
-    top: calc(50% - 170px);
-    left: calc(50% - 220px);
-    height: 236px;
-    width: 400px;
+    top: calc(50% - (33% / 2));
+    left: calc(50% - (96% / 2));
+    height: 33%;
+    width: 85%;
     border-radius: 24px;
   }
 }
@@ -100,7 +110,7 @@ body {
 
 @media (max-width: 440px) {
   .popup-content {
-    width: 200px;
+    width: 52%;
     height: 200px;
   }
 }
@@ -114,10 +124,12 @@ body {
 
 @media (max-width: 440px) {
   .popup-heading {
+    height: 100%;
+    width: 25%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: large;
+    font-size: medium;
   }
 }
 
@@ -128,6 +140,7 @@ body {
 @media (max-width: 440px) {
   .popup-content h2 {
     font-size: medium;
+    margin: 0px;
   }
 }
 
