@@ -88,7 +88,7 @@ body {
 @media (max-width: 440px) {
   .popup-overlay {
     position: absolute;
-    top: calc(50% - (33% / 2));
+    top: calc(50% - (50% / 2));
     left: calc(50% - (95% / 2));
     height: 50%;
     width: 95%;
