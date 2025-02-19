@@ -131,6 +131,7 @@ a {
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px,
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  z-index: -3;
 }
 
 .resume-section {
@@ -246,6 +247,7 @@ main h2 {
 }
 
 #profile-section {
+  z-index: 999;
   height: 140px;
 }
 
@@ -417,6 +419,10 @@ textarea {
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
 
+textarea::placeholder {
+  color: var(--primary-bg-color);
+}
+
 h4 {
   margin: 3px 0px 3px 0px;
 }
@@ -447,6 +453,10 @@ h4 {
   #person-work-experience {
     width: 95%;
   }
+}
+
+input::placeholder {
+  color: var(--primary-bg-color);
 }
 
 .skill-inputs {
@@ -481,6 +491,7 @@ h4 {
   width: 180px;
   display: flex;
   align-items: end;
+  z-index: -1;
 }
 
 @media (max-width: 440px) {
