@@ -88,10 +88,10 @@ body {
 @media (max-width: 440px) {
   .popup-overlay {
     position: absolute;
-    top: calc(50% - (50% / 2));
-    left: calc(50% - (95% / 2));
-    height: 45%;
-    width: 95%;
+    top: calc(50% - (250px / 2));
+    left: calc(50% - (350px / 2));
+    height: 250px;
+    width: 350px;
     border-radius: 24px;
     padding-bottom: 24px;
     box-sizing: border-box;
@@ -141,7 +141,7 @@ body {
 
 @media (max-width: 440px) {
   .popup-content h2 {
-    font-size: medium;
+    font-size: small;
     margin: 0px;
   }
 }
@@ -169,7 +169,7 @@ body {
 
 @media (max-width: 440px) {
   #nameInput {
-    width: 150px;
+    width: 90%;
   }
 }
 
