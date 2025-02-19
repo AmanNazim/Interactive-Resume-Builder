@@ -714,7 +714,7 @@ class createContactUSModal {
               <input type="text" id="contact-name" placeholder="Name">
               <input type="email" id="contact-email" placeholder="Email">
               </div>
-              <textarea id="contact-message" placeholder="Message" tabindex="0"></textarea>
+              <textarea id="contact-message" placeholder="Message"></textarea>
               <button type="button" class="comment-button">Send</button>
             </form>
             <div id="social-links">
