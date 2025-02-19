@@ -111,7 +111,7 @@ body {
 @media (max-width: 440px) {
   .popup-content {
     width: 52%;
-    height: 200px;
+    height: 90%;
   }
 }
 
