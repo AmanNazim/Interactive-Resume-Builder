@@ -803,8 +803,12 @@ function showError(message: string): void {
   `;
   errorElement.textContent = message;
 
-  const generateBtn = document.querySelector(".generate-resume");
-  generateBtn?.parentNode?.insertBefore(errorElement, generateBtn);
+  const generateBtn = document.querySelectorAll(
+    ".generate-resume"
+  ) as NodeListOf<HTMLButtonElement>;
+  generateBtn.forEach((btn) => {
+    btn.parentElement?.insertBefore(errorElement, btn);
+  });
 }
 
 function readFileAsDataURL(file: File): Promise<string> {

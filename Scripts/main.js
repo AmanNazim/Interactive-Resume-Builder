@@ -666,7 +666,6 @@ document.querySelectorAll(".themes").forEach(function (theme) {
 }); });
 // Helper functions
 function showError(message) {
-    var _a;
     var existingError = document.querySelector(".error-message");
     if (existingError)
         existingError.remove();
@@ -674,8 +673,11 @@ function showError(message) {
     errorElement.className = "error-message";
     errorElement.style.cssText = "\n    color: #dc3545;\n    padding: 0.5rem;\n    margin: 0.5rem 0;\n    border: 1px solid #f8d7da;\n    border-radius: 4px;\n    background: #f8d7da;\n  ";
     errorElement.textContent = message;
-    var generateBtn = document.querySelector(".generate-resume");
-    (_a = generateBtn === null || generateBtn === void 0 ? void 0 : generateBtn.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(errorElement, generateBtn);
+    var generateBtn = document.querySelectorAll(".generate-resume");
+    generateBtn.forEach(function (btn) {
+        var _a;
+        (_a = btn.parentElement) === null || _a === void 0 ? void 0 : _a.insertBefore(errorElement, btn);
+    });
 }
 function readFileAsDataURL(file) {
     return new Promise(function (resolve, reject) {

@@ -553,71 +553,71 @@ document.querySelectorAll(".themes").forEach((theme) => {
     });
 });
 // Generate Resume handler
-(_b = document
-    .querySelector(".generate-resume")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", () => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c;
-    // Validate theme selection
-    const selectedTheme = (_a = document.querySelector(".themes.selected")) === null || _a === void 0 ? void 0 : _a.id;
-    if (!selectedTheme) {
-        showError("Please select a theme first!");
-        return;
-    }
-    // Validate required fields
-    const requiredFields = [
-        { id: "person-name", name: "Name" },
-        { id: "person-email", name: "Email" },
-        { id: "person-contact", name: "Contact" },
-        { id: "person-address", name: "Address" },
-    ];
-    const emptyField = requiredFields.find((field) => {
-        const element = document.getElementById(field.id);
-        return !element.value.trim();
-    });
-    if (emptyField) {
-        showError(`Please fill in the ${emptyField.name} field`);
-        (_b = document.getElementById(emptyField.id)) === null || _b === void 0 ? void 0 : _b.focus();
-        return;
-    }
-    // Collect form data
-    const resumeData = {
-        theme: selectedTheme,
-        profile: {
-            name: document.getElementById("person-name").value.trim(),
-            email: document.getElementById("person-email").value.trim(),
-            contact: document.getElementById("person-contact").value.trim(),
-            address: document.getElementById("person-address").value.trim(),
-            profileText: document.getElementById("profile-text").value.trim(),
-            profileImage: undefined,
-        },
-        education: document.getElementById("person-education").value.trim(),
-        experience: document.getElementById("person-work-experience").value.trim(),
-        skills: Array.from(document.querySelectorAll(".skill-inputs"))
-            .map((input) => input.value.trim())
-            .filter(Boolean),
-        languages: Array.from(document.querySelectorAll(".person-lang-input"))
-            .map((input) => input.value.trim())
-            .filter(Boolean),
-    };
-    // Handle profile image
-    const imageInput = document.getElementById("profile-picture-input");
-    const imageFile = (_c = imageInput.files) === null || _c === void 0 ? void 0 : _c[0];
-    if (imageFile) {
-        try {
-            const imageUrl = yield readFileAsDataURL(imageFile);
-            resumeData.profile.profileImage = imageUrl;
-        }
-        catch (error) {
-            showError("Failed to process profile image. Please try again.");
+(_b = document.querySelectorAll(".generate-resume")) === null || _b === void 0 ? void 0 : _b.forEach((btn) => {
+    btn.addEventListener("click", () => __awaiter(void 0, void 0, void 0, function* () {
+        var _a, _b, _c;
+        // Validate theme selection
+        const selectedTheme = (_a = document.querySelector(".themes.selected")) === null || _a === void 0 ? void 0 : _a.id;
+        if (!selectedTheme) {
+            showError("Please select a theme first!");
             return;
         }
-    }
-    // Save data and redirect with theme parameter
-    localStorage.setItem("resumeData", JSON.stringify(resumeData));
-    window.location.href = `resume-output.html?theme=${selectedTheme}`;
-}));
+        // Validate required fields
+        const requiredFields = [
+            { id: "person-name", name: "Name" },
+            { id: "person-email", name: "Email" },
+            { id: "person-contact", name: "Contact" },
+            { id: "person-address", name: "Address" },
+        ];
+        const emptyField = requiredFields.find((field) => {
+            const element = document.getElementById(field.id);
+            return !element.value.trim();
+        });
+        if (emptyField) {
+            showError(`Please fill in the ${emptyField.name} field`);
+            (_b = document.getElementById(emptyField.id)) === null || _b === void 0 ? void 0 : _b.focus();
+            return;
+        }
+        // Collect form data
+        const resumeData = {
+            theme: selectedTheme,
+            profile: {
+                name: document.getElementById("person-name").value.trim(),
+                email: document.getElementById("person-email").value.trim(),
+                contact: document.getElementById("person-contact").value.trim(),
+                address: document.getElementById("person-address").value.trim(),
+                profileText: document.getElementById("profile-text").value.trim(),
+                profileImage: undefined,
+            },
+            education: document.getElementById("person-education").value.trim(),
+            experience: document.getElementById("person-work-experience").value.trim(),
+            skills: Array.from(document.querySelectorAll(".skill-inputs"))
+                .map((input) => input.value.trim())
+                .filter(Boolean),
+            languages: Array.from(document.querySelectorAll(".person-lang-input"))
+                .map((input) => input.value.trim())
+                .filter(Boolean),
+        };
+        // Handle profile image
+        const imageInput = document.getElementById("profile-picture-input");
+        const imageFile = (_c = imageInput.files) === null || _c === void 0 ? void 0 : _c[0];
+        if (imageFile) {
+            try {
+                const imageUrl = yield readFileAsDataURL(imageFile);
+                resumeData.profile.profileImage = imageUrl;
+            }
+            catch (error) {
+                showError("Failed to process profile image. Please try again.");
+                return;
+            }
+        }
+        // Save data and redirect with theme parameter
+        localStorage.setItem("resumeData", JSON.stringify(resumeData));
+        window.location.href = `resume-output.html?theme=${selectedTheme}`;
+    }));
+});
 // Helper functions
 function showError(message) {
-    var _a;
     const existingError = document.querySelector(".error-message");
     if (existingError)
         existingError.remove();
@@ -632,8 +632,11 @@ function showError(message) {
     background: #f8d7da;
   `;
     errorElement.textContent = message;
-    const generateBtn = document.querySelector(".generate-resume");
-    (_a = generateBtn === null || generateBtn === void 0 ? void 0 : generateBtn.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(errorElement, generateBtn);
+    const generateBtn = document.querySelectorAll(".generate-resume");
+    generateBtn.forEach((btn) => {
+        var _a;
+        (_a = btn.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(errorElement, btn);
+    });
 }
 function readFileAsDataURL(file) {
     return new Promise((resolve, reject) => {
